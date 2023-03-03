@@ -3,7 +3,6 @@ package com.example.numblebankingserverchallenge.config
 
 
 import com.example.numblebankingserverchallenge.exception.CustomException
-import com.example.numbletimedealserver.domain.Customer
 import com.example.numbletimedealserver.dto.CustomerDto
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.MethodParameter

@@ -1,13 +1,10 @@
 package com.example.numbletimedealserver.repository.product
 
 import com.example.numbletimedealserver.domain.Product
-import com.example.numbletimedealserver.domain.QProduct
-import com.example.numbletimedealserver.domain.QProduct.*
-
+import com.example.numbletimedealserver.domain.QProduct.product
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Service
 import java.time.LocalTime
-import java.util.UUID
 
 
 @Service

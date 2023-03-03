@@ -18,7 +18,7 @@ class ProductScheduler
         val end = min.plusMinutes(1)
 
         productService.findAllByAppointedTime(min,end).asSequence().onEach {
-            productService.update(it.id)
+            productService.dailyUpdate(it.id)
         }
     }
 }

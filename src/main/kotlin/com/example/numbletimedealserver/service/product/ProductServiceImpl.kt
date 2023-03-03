@@ -27,13 +27,14 @@ class ProductServiceImpl(
     private val customerRepository: CustomerRepository,
 ) : ProductService {
     @Transactional
-    override fun update(productId: UUID,adminId: UUID, productUpdateRequest: ProductUpdateRequest): ProductDto {
-        val product =productRepository.findById(productId).orElse(null) ?: throw CustomException.ProductNotFoundException()
-        if(adminId!=product.admin.id) throw CustomException.ForbiddenException()
-        val (name,desc,time,quantity) = productUpdateRequest
+    override fun update(productId: UUID, adminId: UUID, productUpdateRequest: ProductUpdateRequest): ProductDto {
+        val product =
+            productRepository.findById(productId).orElse(null) ?: throw CustomException.ProductNotFoundException()
+        if (adminId != product.admin.id) throw CustomException.ForbiddenException()
+        val (name, desc, time, quantity) = productUpdateRequest
         name?.let { product.updateName(it) }
         desc?.let { product.updateDesc(it) }
-        time?.let{product.updateTime(it)}
+        time?.let { product.updateTime(it) }
         quantity?.let { product.updateQuantity(it) }
         return ProductDto(product)
     }
@@ -50,14 +51,15 @@ class ProductServiceImpl(
         return productRepository.findAllByAppointedTimeBetween(start, end).map(::ProductDto)
     }
 
-    override fun register(adminId:UUID,productRegisterRequest: ProductRegisterRequest): ProductDto {
-        val(name,desc, time, quantity)  = productRegisterRequest
-        val admin = customerRepository.findById(adminId).orElse(null) ?:throw CustomException.UserNotFoundException()
-        return productRepository.save(Product(name,desc,time,quantity,admin)).let(::ProductDto)
+    override fun register(adminId: UUID, productRegisterRequest: ProductRegisterRequest): ProductDto {
+        val (name, desc, time, quantity) = productRegisterRequest
+        val admin = customerRepository.findById(adminId).orElse(null) ?: throw CustomException.UserNotFoundException()
+        return productRepository.save(Product(name, desc, time, quantity, admin)).let(::ProductDto)
     }
 
     override fun getAllBuyers(productId: UUID, pageable: Pageable): Page<CustomerDto> {
-        val content = orderRepository.findAllByProductIdAndDate(productId, LocalDate.now()).map { it.customer.let(::CustomerDto) }
+        val content =
+            orderRepository.findAllByProductIdAndDate(productId, LocalDate.now()).map { it.customer.let(::CustomerDto) }
         val countQuery = orderRepository.countAllByProductIdAndDate(productId, LocalDate.now())
         return PageableExecutionUtils.getPage(content, pageable) { countQuery.fetchOne() ?: 0L }
     }
@@ -67,15 +69,18 @@ class ProductServiceImpl(
         productListCondition: ProductListCondition,
         pageable: Pageable
     ): Page<ProductDto> {
-        val(from,to) = productListCondition
-        from?.let{if(it.isAfter(LocalDate.now())) throw CustomException.BadRequestException()}
 
-        val content = orderRepository.findAllByCustomerId(customerId, productListCondition).map { it.product.let(::ProductDto) }
+        val (from, to) = productListCondition
+        from?.let { if (it.isAfter(LocalDate.now())) throw CustomException.BadRequestException() }
+        val content =
+            orderRepository.findAllByCustomerId(customerId, productListCondition).map { it.product.let(::ProductDto) }
         val countQuery = orderRepository.countByCustomerId(customerId, productListCondition)
         return PageableExecutionUtils.getPage(content, pageable) { countQuery.fetchOne() ?: 0L }
     }
 
     override fun getAllProductsRegistered(adminId: UUID, pageable: Pageable): Page<ProductDto> {
-        productRepository.
+        val content = productRepository.findAllByAdminId(adminId).map(::ProductDto)
+        val countQuery = productRepository.countAllByAdminId(adminId)
+        return PageableExecutionUtils.getPage(content, pageable) { countQuery.fetchOne() ?: 0L }
     }
 }

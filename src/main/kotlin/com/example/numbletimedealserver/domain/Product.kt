@@ -6,7 +6,9 @@ import jakarta.persistence.*
 import java.time.LocalTime
 
 @Entity
-@Table(indexes = [Index(name = "idx_appointed_time", columnList = "appointed_time")])
+@Table(indexes = [
+        Index(name = "idx_appointed_time", columnList = "appointed_time"),
+        Index(name = "idx_admin_id", columnList = "admin_id")])
 class Product(
 
     @Column(nullable = false)
@@ -18,8 +20,8 @@ class Product(
     @Column(nullable = false, name = "appointed_quantity")
     private var _appointedQuantity: Long,
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = [CascadeType.ALL])
-    @JoinColumn(name="admin_id")
-    val admin:Customer,
+    @JoinColumn(name = "admin_id")
+    val admin: Customer,
     @Column(nullable = false, name = "stock")
     private var _stockQuantity: Long = 0L,
 ) : PrimaryKeyEntity() {
@@ -31,8 +33,20 @@ class Product(
     fun dailyUpdate() {
         this._stockQuantity = appointedQuantity
     }
-    fun updateTime(time:LocalTime){_appointedTime=time}
-    fun updateQuantity(quantity:Long){_appointedQuantity=quantity}
-    fun updateName(newName:String){_name=newName}
-    fun updateDesc(desc:String){_description=desc}
+
+    fun updateTime(time: LocalTime) {
+        _appointedTime = time
+    }
+
+    fun updateQuantity(quantity: Long) {
+        _appointedQuantity = quantity
+    }
+
+    fun updateName(newName: String) {
+        _name = newName
+    }
+
+    fun updateDesc(desc: String) {
+        _description = desc
+    }
 }

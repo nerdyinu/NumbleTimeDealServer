@@ -4,7 +4,7 @@ import com.example.numbletimedealserver.domain.Order
 import com.example.numbletimedealserver.domain.QCustomer.customer
 import com.example.numbletimedealserver.domain.QOrder.order
 import com.example.numbletimedealserver.domain.QProduct.product
-import com.example.numbletimedealserver.dto.ProductListCondition
+import com.example.numbletimedealserver.request.ProductListCondition
 import com.querydsl.jpa.impl.JPAQuery
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page

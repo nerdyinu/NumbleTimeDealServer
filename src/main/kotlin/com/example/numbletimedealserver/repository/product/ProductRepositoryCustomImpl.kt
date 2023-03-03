@@ -2,9 +2,11 @@ package com.example.numbletimedealserver.repository.product
 
 import com.example.numbletimedealserver.domain.Product
 import com.example.numbletimedealserver.domain.QProduct.product
+import com.example.numbletimedealserver.request.ProductUpdateRequest
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Service
 import java.time.LocalTime
+import java.util.*
 
 
 @Service
@@ -14,5 +16,7 @@ class ProductRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) 
       return   jpaQueryFactory.selectFrom(product).where(product.appointedTime.between(start,end)).fetch()
     }
 
-
+//    override fun findAllByAdminId(adminId: UUID): List<Product> {
+//
+//    }
 }

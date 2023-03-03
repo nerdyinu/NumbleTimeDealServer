@@ -11,12 +11,13 @@ import org.hibernate.annotations.BatchSize
 class Customer (
     name:String,
     var password:String,
+    @Column(nullable = false)
+    val role:ROLE,
     @JsonManagedReference
     @OneToMany(mappedBy = "customer", cascade = [CascadeType.ALL])
     @BatchSize(size = 100)
     private val _orders:MutableList<Order> = mutableListOf(),
-    @Column(nullable = false)
-    val role:ROLE
+
 ):PrimaryKeyEntity(){
     @Column(nullable = false)
     var name:String = name

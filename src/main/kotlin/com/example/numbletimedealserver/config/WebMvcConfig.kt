@@ -11,5 +11,5 @@ class WebMvcConfig:WebMvcConfigurer {
         resolvers.add(loggedInMemberResolver())
     }
     @Bean
-    fun loggedInMemberResolver():HandlerMethodArgumentResolver = SessionHandlerMethodArgumentResolver()
+    fun loggedInMemberResolver():HandlerMethodArgumentResolver = SessionLoginHandlerMethodArgumentResolver()
 }

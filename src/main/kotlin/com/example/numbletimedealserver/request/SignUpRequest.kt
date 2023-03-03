@@ -1,4 +1,4 @@
-package com.example.numbletimedealserver.dto
+package com.example.numbletimedealserver.request
 
 import com.example.numbletimedealserver.domain.ROLE
 

@@ -11,10 +11,10 @@ import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
-class SessionHandlerMethodArgumentResolver : HandlerMethodArgumentResolver {
+class SessionLoginHandlerMethodArgumentResolver : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
          return CustomerDto::class.javaObjectType.isAssignableFrom(parameter.parameterType) && parameter.hasParameterAnnotation(
-            SessionLoginChecker::class.java
+            SessionLogin::class.java
         )
     }
     override fun resolveArgument(

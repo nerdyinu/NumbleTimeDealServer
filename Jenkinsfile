@@ -3,13 +3,13 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        sshagent(['git']) {
+        sshagent(['git'], credentials:["Jenkins-ssh"]) {
           checkout([
             $class: 'GitSCM',
             branches: [[name: '*/deploy']],
             userRemoteConfigs: [[
               url: 'git@github.com:inudev5/NumbleTimeDealServer.git',
-              credentialsId: 'Jenkins-ssh'
+              credentialsId: 'git'
             ]]
           ])
         }

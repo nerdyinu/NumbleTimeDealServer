@@ -9,7 +9,7 @@ pipeline {
             branches: [[name: '*/deploy']],
             userRemoteConfigs: [[
               url: 'git@github.com:inudev5/NumbleTimeDealServer.git',
-              credentialsId: 'git'
+              credentialsId: 'Jenkins-ssh'
             ]]
           ])
         }
@@ -18,7 +18,7 @@ pipeline {
     // Other stages here
       stage('Build') {
         steps {
-          sh './gradlew build'
+          sh './gradlew clean build'
         }
       }
     stage('Test') {

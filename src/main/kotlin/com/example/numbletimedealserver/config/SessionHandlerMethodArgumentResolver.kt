@@ -1,7 +1,10 @@
 package com.example.numblebankingserverchallenge.config
 
-import com.example.numblebankingserverchallenge.dto.MemberDTO
+
+
 import com.example.numblebankingserverchallenge.exception.CustomException
+import com.example.numbletimedealserver.domain.Customer
+import com.example.numbletimedealserver.dto.CustomerDto
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.MethodParameter
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -11,7 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 
 class SessionHandlerMethodArgumentResolver : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-         return MemberDTO::class.javaObjectType.isAssignableFrom(parameter.parameterType) && parameter.hasParameterAnnotation(
+         return CustomerDto::class.javaObjectType.isAssignableFrom(parameter.parameterType) && parameter.hasParameterAnnotation(
             SessionLoginChecker::class.java
         )
     }
@@ -20,10 +23,10 @@ class SessionHandlerMethodArgumentResolver : HandlerMethodArgumentResolver {
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
-    ): MemberDTO {
+    ): CustomerDto {
         val request = webRequest.nativeRequest as? HttpServletRequest
         val member =
-            request?.session?.getAttribute("user") as? MemberDTO ?: throw CustomException.NotLoggedInException()
+            request?.session?.getAttribute("user") as? CustomerDto ?: throw CustomException.NotLoggedInException()
         return member
 
 

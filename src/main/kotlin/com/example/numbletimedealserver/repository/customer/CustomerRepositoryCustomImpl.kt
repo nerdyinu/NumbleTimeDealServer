@@ -1,4 +1,4 @@
 package com.example.numbletimedealserver.repository.customer
 
-class CustomerRepositoryImpl {
+class CustomerRepositoryCustomImpl:CustomerRepositoryCustom{
 }

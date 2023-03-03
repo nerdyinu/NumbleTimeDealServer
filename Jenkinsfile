@@ -16,17 +16,19 @@ pipeline {
       }
     }
     // Other stages here
-  }
-  stage('Build') {
-    steps {
-      sh './gradlew build'
+      stage('Build') {
+        steps {
+          sh './gradlew build'
+        }
+      }
+    stage('Test') {
+      steps {
+        sh './gradlew test'
+      }
     }
   }
-  stage('Test') {
-    steps {
-      sh './gradlew test'
-    }
-  }
+
+
 //   stage('Performance Test') {
 //     steps {
 //       sh 'ngrinder_agent run'

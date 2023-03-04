@@ -12,6 +12,6 @@ class Order(
     @JoinColumn(name = "product_id")
     val product: Product,
     @Column(nullable = false)
-    val quantity:Int = 0
+    val quantity:Int = 1
 ) :PrimaryKeyEntity(){
 }

@@ -1,14 +1,14 @@
 package com.example.numbletimedealserver.service.product
 
-import com.example.numblebankingserverchallenge.exception.CustomException
-import com.example.numbletimedealserver.domain.Customer
+
 import com.example.numbletimedealserver.domain.Product
 import com.example.numbletimedealserver.dto.CustomerDto
 import com.example.numbletimedealserver.dto.ProductDto
+import com.example.numbletimedealserver.exception.CustomException
 import com.example.numbletimedealserver.repository.customer.CustomerRepository
-import com.example.numbletimedealserver.request.ProductListCondition
 import com.example.numbletimedealserver.repository.order.OrderRepository
 import com.example.numbletimedealserver.repository.product.ProductRepository
+import com.example.numbletimedealserver.request.ProductListCondition
 import com.example.numbletimedealserver.request.ProductRegisterRequest
 import com.example.numbletimedealserver.request.ProductUpdateRequest
 import org.springframework.data.domain.Page
@@ -29,13 +29,12 @@ class ProductServiceImpl(
     @Transactional
     override fun update(productId: UUID, adminId: UUID, productUpdateRequest: ProductUpdateRequest): ProductDto {
         val product =
-            productRepository.findById(productId).orElse(null) ?: throw CustomException.ProductNotFoundException()
-        if (adminId != product.admin.id) throw CustomException.ForbiddenException()
+            productRepository.findByIdAndAdminId(productId, adminId) ?: throw CustomException.ProductNotFoundException()
         val (name, desc, time, quantity) = productUpdateRequest
         name?.let { product.updateName(it) }
         desc?.let { product.updateDesc(it) }
         time?.let { product.updateTime(it) }
-        quantity?.let { product.updateQuantity(it) }
+        quantity?.let { product.updateAppointedQuantity(it) }
         return ProductDto(product)
     }
 
@@ -82,5 +81,10 @@ class ProductServiceImpl(
         val content = productRepository.findAllByAdminId(adminId).map(::ProductDto)
         val countQuery = productRepository.countAllByAdminId(adminId)
         return PageableExecutionUtils.getPage(content, pageable) { countQuery.fetchOne() ?: 0L }
+    }
+
+    override fun delete(productId: UUID, adminId: UUID) {
+        val product =productRepository.findByIdAndAdminId(productId,adminId) ?: throw CustomException.ProductNotFoundException()
+        productRepository.deleteById(productId)
     }
 }

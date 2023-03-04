@@ -5,7 +5,7 @@ import com.example.numbletimedealserver.request.LoginRequest
 import com.example.numbletimedealserver.request.SignUpRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import java.util.UUID
+import java.util.*
 
 interface CustomerService {
     fun signup(signupRequest: SignUpRequest):CustomerDto

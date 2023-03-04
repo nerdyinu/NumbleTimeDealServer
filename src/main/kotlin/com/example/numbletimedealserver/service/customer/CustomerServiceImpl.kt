@@ -1,16 +1,19 @@
 package com.example.numbletimedealserver.service.customer
 
-import com.example.numblebankingserverchallenge.exception.CustomException
+
 import com.example.numbletimedealserver.domain.Customer
 import com.example.numbletimedealserver.dto.CustomerDto
+import com.example.numbletimedealserver.exception.CustomException
+import com.example.numbletimedealserver.repository.customer.CustomerRepository
 import com.example.numbletimedealserver.request.LoginRequest
 import com.example.numbletimedealserver.request.SignUpRequest
-import com.example.numbletimedealserver.repository.customer.CustomerRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.support.PageableExecutionUtils
+import org.springframework.stereotype.Service
 import java.util.*
 
+@Service
 class CustomerServiceImpl(private val customerRepository: CustomerRepository) : CustomerService {
     override fun signup(signupRequest: SignUpRequest): CustomerDto {
         val (name, pw, role) = signupRequest

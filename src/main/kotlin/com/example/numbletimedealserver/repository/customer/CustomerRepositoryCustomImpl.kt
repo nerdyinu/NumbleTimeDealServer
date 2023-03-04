@@ -1,8 +1,7 @@
 package com.example.numbletimedealserver.repository.customer
 
 import com.example.numbletimedealserver.domain.Customer
-import com.example.numbletimedealserver.domain.QCustomer
-import com.example.numbletimedealserver.domain.QCustomer.*
+import com.example.numbletimedealserver.domain.QCustomer.customer
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

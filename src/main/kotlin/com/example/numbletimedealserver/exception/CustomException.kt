@@ -1,4 +1,4 @@
-package com.example.numblebankingserverchallenge.exception
+package com.example.numbletimedealserver.exception
 
 sealed class CustomException(val code:ErrorCode) :RuntimeException(code.message) {
     class ProductNotFoundException:CustomException(ErrorCode.PRODUCT_NOT_FOUND)

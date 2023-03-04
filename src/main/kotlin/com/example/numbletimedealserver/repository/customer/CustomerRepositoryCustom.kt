@@ -1,7 +1,6 @@
 package com.example.numbletimedealserver.repository.customer
 
 import com.example.numbletimedealserver.domain.Customer
-import com.example.numbletimedealserver.dto.CustomerDto
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 

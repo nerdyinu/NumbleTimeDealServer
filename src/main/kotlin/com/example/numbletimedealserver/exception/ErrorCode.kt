@@ -1,4 +1,4 @@
-package com.example.numblebankingserverchallenge.exception
+package com.example.numbletimedealserver.exception
 
 sealed class ErrorCode(val status:Int, val message:String) {
     object INVALID_PARAMETER:ErrorCode(400,"잘못된 요청입니다.")

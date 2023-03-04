@@ -68,4 +68,6 @@ class OrderRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) : 
         val countQuery = countAllByProductIdAndDate(productId, orderDate)
         return PageableExecutionUtils.getPage(content, pageable) { countQuery.fetchOne() ?: 0L }
     }
+
+
 }

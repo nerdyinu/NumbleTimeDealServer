@@ -1,14 +1,15 @@
 package com.example.numbletimedealserver.domain
 
-import com.example.numblebankingserverchallenge.exception.CustomException
-import com.example.numbletimedealserver.request.ProductRegisterRequest
+import com.example.numbletimedealserver.exception.CustomException
 import jakarta.persistence.*
 import java.time.LocalTime
 
 @Entity
-@Table(indexes = [
+@Table(
+    indexes = [
         Index(name = "idx_appointed_time", columnList = "appointed_time"),
-        Index(name = "idx_admin_id", columnList = "admin_id")])
+        Index(name = "idx_admin_id", columnList = "admin_id")]
+)
 class Product(
 
     @Column(nullable = false)
@@ -38,7 +39,12 @@ class Product(
         _appointedTime = time
     }
 
-    fun updateQuantity(quantity: Long) {
+    fun descStock() {
+        if (_stockQuantity == 0L) throw CustomException.BadRequestException()
+        _stockQuantity --
+    }
+
+    fun updateAppointedQuantity(quantity: Long) {
         _appointedQuantity = quantity
     }
 

@@ -1,7 +1,5 @@
 package com.example.numbletimedealserver.service.product
 
-import com.example.numbletimedealserver.domain.Customer
-import com.example.numbletimedealserver.domain.Product
 import com.example.numbletimedealserver.dto.CustomerDto
 import com.example.numbletimedealserver.dto.ProductDto
 import com.example.numbletimedealserver.request.ProductListCondition
@@ -13,6 +11,7 @@ import java.time.LocalTime
 import java.util.*
 
 interface ProductService {
+    fun delete(productId: UUID, adminId: UUID)
     fun update(productId: UUID, adminId: UUID,productUpdateRequest: ProductUpdateRequest):ProductDto
     fun register(adminId:UUID,productRegisterRequest: ProductRegisterRequest):ProductDto
     fun dailyUpdate(productId:UUID):ProductDto

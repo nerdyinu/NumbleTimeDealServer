@@ -1,9 +1,8 @@
 package com.example.numbletimedealserver.controller
 
+
+
 import com.example.numblebankingserverchallenge.config.SessionLogin
-import com.example.numblebankingserverchallenge.exception.CustomException
-import com.example.numbletimedealserver.config.SessionAdmin
-import com.example.numbletimedealserver.domain.ROLE
 import com.example.numbletimedealserver.dto.CustomerDto
 import com.example.numbletimedealserver.dto.ProductDto
 import com.example.numbletimedealserver.request.ProductListCondition
@@ -21,7 +20,10 @@ import java.util.*
 class ProductController(private val productService: ProductService, private val customerService: CustomerService) {
     //상품 : 삭제/목록/상세 기능
     @PostMapping("/register")
-    fun register(productRegisterRequest: ProductRegisterRequest, @SessionAdmin admin: CustomerDto): ProductDto {
+    fun register(
+        productRegisterRequest: ProductRegisterRequest,
+        @SessionLogin(admin = true) admin: CustomerDto
+    ): ProductDto {
         return productService.register(admin.id, productRegisterRequest)
     }
 
@@ -29,18 +31,25 @@ class ProductController(private val productService: ProductService, private val 
     fun update(
         @PathVariable("productId") productId: UUID,
         productUpdateRequest: ProductUpdateRequest,
-        @SessionAdmin admin: CustomerDto
+        @SessionLogin(admin = true) admin: CustomerDto
     ): ProductDto {
         return productService.update(productId, admin.id, productUpdateRequest)
     }
 
     @DeleteMapping("/product/{productId}")
-    fun delete(@PathVariable("productId") productId: UUID, @SessionAdmin admin: CustomerDto) {
-
+    fun delete(
+        @PathVariable("productId") productId: UUID,
+        @SessionLogin(admin = true) admin: CustomerDto
+    ): ResponseEntity<String> {
+        productService.delete(productId, admin.id)
+        return ResponseEntity.ok().build()
     }
 
     @GetMapping("/products/admin")
-    fun productListAdmin(@SessionAdmin admin: CustomerDto, pageable: Pageable): ResponseEntity<Page<ProductDto>> {
+    fun productListAdmin(
+        @SessionLogin(admin = true) admin: CustomerDto,
+        pageable: Pageable
+    ): ResponseEntity<Page<ProductDto>> {
         return productService.getAllProductsRegistered(admin.id, pageable).let { ResponseEntity.ok(it) }
 
     }

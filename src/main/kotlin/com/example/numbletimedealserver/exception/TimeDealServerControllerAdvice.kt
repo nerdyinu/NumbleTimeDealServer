@@ -1,4 +1,4 @@
-package com.example.numblebankingserverchallenge.exception
+package com.example.numbletimedealserver.exception
 
 
 import org.springframework.http.HttpStatus

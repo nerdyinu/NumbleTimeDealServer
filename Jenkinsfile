@@ -57,7 +57,7 @@ pipeline {
         stage("run ngrinder"){
           steps {
            script {
-             sh "docker compose up"
+             sh "docker-compose up && docker-compose rm -fsv"
            }
          }
         }

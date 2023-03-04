@@ -9,7 +9,7 @@ pipeline {
             branches: [[name: '*/deploy']],
             userRemoteConfigs: [[
               url: 'git@github.com:inudev5/NumbleTimeDealServer.git',
-              credentialsId: 'git'
+              credentialsId: 'b60d7587-b545-4277-92db-d1ccefa19b0a'
             ]]
           ])
         }

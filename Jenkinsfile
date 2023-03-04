@@ -26,7 +26,7 @@ pipeline {
         sh './gradlew test'
       }
     }
-    state("Package"){
+    stage("Package"){
       steps{
         sh './gradlew bootJar'
       }

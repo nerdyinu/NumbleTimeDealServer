@@ -39,19 +39,19 @@ pipeline {
           docker.build("inust33/myapp:${env.BUILD_NUMBER}")
 
           docker.withRegistry('https://registry.hub.docker.com/v2', 'docker_credentials') {
-                docker.image("inust33/myapp:${env.BUILD_NUMBER}").push()
+            docker.image("inust33/myapp:${env.BUILD_NUMBER}").push()
           }
         }
       }
     }
 
-    stage('Deploy Docker Container') {
-      steps {
-        script {
-          sh 'docker run -p 7070:8080 -d inust33/myapp:${env.BUILD_NUMBER}'
+        stage('Deploy Docker Container') {
+          steps {
+            script {
+              sh "docker run -p 7070:8080 -d inust33/myapp:${env.BUILD_NUMBER}"
+            }
+          }
         }
-      }
-    }
 
     //   stage('Performance Test') {
     //     steps {

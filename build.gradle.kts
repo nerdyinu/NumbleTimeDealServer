@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -13,7 +14,7 @@ plugins {
 val asciidoctorExt by configurations.creating
 val snippetsDir by extra { file("build/generated-snippets") }
 group = "com.example"
-version = "0.0.1-SNAPSHOT"
+version = "timedeal-server-1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {

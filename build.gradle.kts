@@ -68,3 +68,7 @@ noArg {
     annotation("jakarta.persistence.Embeddable")
     annotation("org.springframework.stereotype.Component")
 }
+tasks.bootJar{
+    archiveBaseName.set("com.example")
+    archiveFileName.set("myapp.jar")
+}

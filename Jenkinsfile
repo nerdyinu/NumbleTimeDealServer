@@ -36,9 +36,9 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         script {
-          docker.build("NumbleTimeDealServer-timedeal-server-1.0.0:${env.BUILD_NUMBER}")
+          docker.build("myapp:${env.BUILD_NUMBER}")
           docker.withRegistry('https://registry.example.com', 'docker-credentials') {
-            docker.image("NumbleTimeDealServer-timedeal-server-1.0.0:${env.BUILD_NUMBER}").push()
+            docker.image("myapp:${env.BUILD_NUMBER}").push()
           }
         }
       }
@@ -47,7 +47,7 @@ pipeline {
     stage('Deploy Docker Container') {
       steps {
         script {
-          sh 'docker run -p 8080:8080 -d NumbleTimeDealServer-timedeal-server-1.0.0:${env.BUILD_NUMBER}'
+          sh 'docker run -p 7070:8080 -d myapp:${env.BUILD_NUMBER}'
         }
       }
     }

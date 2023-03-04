@@ -39,7 +39,7 @@ pipeline {
           docker.build("inust33/myapp:${env.BUILD_NUMBER}")
 
           docker.withRegistry('https://registry.hub.docker.com/v2', 'docker_credentials') {
-                docker.image("myapp:${env.BUILD_NUMBER}").push()
+                docker.image("inust33/myapp:${env.BUILD_NUMBER}").push()
           }
         }
       }
@@ -48,7 +48,7 @@ pipeline {
     stage('Deploy Docker Container') {
       steps {
         script {
-          sh 'docker run -p 7070:8080 -d myapp:${env.BUILD_NUMBER}'
+          sh 'docker run -p 7070:8080 -d inust33/myapp:${env.BUILD_NUMBER}'
         }
       }
     }

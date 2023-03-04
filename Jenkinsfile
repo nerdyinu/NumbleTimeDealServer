@@ -48,11 +48,19 @@ pipeline {
         stage('Deploy Docker Container') {
           steps {
             script {
+            sh 'docker stop inust33/myapp || true'
+              sh 'docker rm inust33/myapp || true'
               sh "docker run -p 7070:8080 -d inust33/myapp:${env.BUILD_NUMBER}"
             }
           }
         }
-
+        stage("run ngrinder"){
+          steps {
+           script {
+             sh "docker-compose up"
+           }
+         }
+        }
     //   stage('Performance Test') {
     //     steps {
     //       sh 'ngrinder_agent run'

@@ -51,7 +51,7 @@ pipeline {
             docker.image("inust33/myapp").withRun("--network")
             sh 'docker stop myapp || true'
               sh 'docker rm myapp || true'
-              sh "docker run -p 7070:8080 -d --name myapp --network jenkins inust33/myapp:${env.BUILD_NUMBER}"
+              sh "docker run -p 7070:8080 -d --name myapp --network=host inust33/myapp:${env.BUILD_NUMBER}"
             }
           }
         }
@@ -62,8 +62,8 @@ pipeline {
              sh "docker rm controller || true"
              sh "docker stop agent || true"
              sh "docker rm agent || true"
-             sh "docker run -d -v ~/ngrinder-controller:/opt/ngrinder-controller --name controller --network jenkins -p 9000:80 -p 16001:16001 -p 12000-12009:12000-12009 ngrinder/controller"
-             sh "docker run -d --name agent --network jenkins --link controller:controller ngrinder/agent"
+             sh "docker run -d -v ~/ngrinder-controller:/opt/ngrinder-controller --name controller --network=host -p 9000:80 -p 16001:16001 -p 12000-12009:12000-12009 ngrinder/controller"
+             sh "docker run -d --name agent --network=host --link controller:controller ngrinder/agent"
            }
          }
         }

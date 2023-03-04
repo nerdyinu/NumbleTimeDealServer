@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        sshagent(['git'], credentials:["Jenkins-ssh"]) {
+        sshagent(['git']) {
           checkout([
             $class: 'GitSCM',
             branches: [[name: '*/deploy']],

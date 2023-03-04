@@ -9,7 +9,7 @@ pipeline {
             branches: [[name: '*/deploy']],
             userRemoteConfigs: [[
               url: 'git@github.com:inudev5/NumbleTimeDealServer.git',
-              credentialsId: 'b60d7587-b545-4277-92db-d1ccefa19b0a'
+              credentialsId: 'github-credentials'
             ]]
           ])
         }
@@ -48,10 +48,10 @@ pipeline {
         stage('Deploy Docker Container') {
           steps {
             script {
-           
+
             sh 'docker stop myapp || true'
               sh 'docker rm myapp || true'
-              sh "docker run -p 7070:8080 -d --name myapp --network=host inust33/myapp:${env.BUILD_NUMBER}"
+              sh "docker run -p 7070:8080 -d --name myapp inust33/myapp:${env.BUILD_NUMBER}"
             }
           }
         }
@@ -62,8 +62,8 @@ pipeline {
              sh "docker rm controller || true"
              sh "docker stop agent || true"
              sh "docker rm agent || true"
-             sh "docker run -d -v ~/ngrinder-controller:/opt/ngrinder-controller --name controller --network=host -p 9000:80 -p 16001:16001 -p 12000-12009:12000-12009 ngrinder/controller"
-             sh "docker run -d --name agent --network=host --link controller:controller ngrinder/agent"
+             sh "docker run -d -v ~/ngrinder-controller:/opt/ngrinder-controller --name controller -p 9000:80 -p 16001:16001 -p 12000-12009:12000-12009 ngrinder/controller"
+             sh "docker run -d --name agent --link controller:controller ngrinder/agent"
            }
          }
         }

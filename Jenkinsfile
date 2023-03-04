@@ -57,13 +57,7 @@ pipeline {
         stage("run ngrinder"){
           steps {
            script {
-             sh "docker stop controller || true"
-             sh "docker rm controller || true"
-             sh "docker stop agent || true"
-             sh "docker rm agent || true"
-
-             sh "docker run -d --name controller -v ./ngrinder-controller:/opt/ngrinder-controller -p 9000:80 -p 16001:16001 -p 12000-12009:12000-12009 ngrinder/controller"
-             sh "docker run -d --name agent --link controller:controller ngrinder/agent"
+             sh "docker compose up"
            }
          }
         }

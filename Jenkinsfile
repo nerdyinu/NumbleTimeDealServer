@@ -31,8 +31,26 @@ pipeline {
         sh './gradlew bootJar'
       }
     }
-  }
 
+
+    stage('Build Docker Image') {
+      steps {
+        script {
+          docker.build("NumbleTimeDealServer-timedeal-server-1.0.0:${env.BUILD_NUMBER}")
+          docker.withRegistry('https://registry.example.com', 'docker-credentials') {
+            docker.image("NumbleTimeDealServer-timedeal-server-1.0.0:${env.BUILD_NUMBER}").push()
+          }
+        }
+      }
+    }
+
+    stage('Deploy Docker Container') {
+      steps {
+        script {
+          sh 'docker run -p 8080:8080 -d NumbleTimeDealServer-timedeal-server-1.0.0:${env.BUILD_NUMBER}'
+        }
+      }
+    }
 
 //   stage('Performance Test') {
 //     steps {
@@ -40,4 +58,5 @@ pipeline {
 //       sh 'ngrinder_controller test'
 //     }
 //   }
+ }
 }

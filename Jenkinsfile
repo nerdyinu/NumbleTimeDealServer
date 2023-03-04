@@ -36,9 +36,10 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         script {
-          docker.build("myapp:${env.BUILD_NUMBER}")
-          docker.withRegistry('https://registry.example.com', 'docker_credentials') {
-            docker.image("myapp:${env.BUILD_NUMBER}").push()
+          docker.build("inust33/myapp:${env.BUILD_NUMBER}")
+
+          docker.withRegistry('https://registry.hub.docker.com/v2', 'docker_credentials') {
+                docker.image("myapp:${env.BUILD_NUMBER}").push()
           }
         }
       }

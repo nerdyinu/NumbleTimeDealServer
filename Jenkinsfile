@@ -37,7 +37,7 @@ pipeline {
       steps {
         script {
           docker.build("myapp:${env.BUILD_NUMBER}")
-          docker.withRegistry('https://registry.example.com', 'docker-credentials') {
+          docker.withRegistry('https://registry.example.com', 'docker_credentials') {
             docker.image("myapp:${env.BUILD_NUMBER}").push()
           }
         }
@@ -52,11 +52,11 @@ pipeline {
       }
     }
 
-//   stage('Performance Test') {
-//     steps {
-//       sh 'ngrinder_agent run'
-//       sh 'ngrinder_controller test'
-//     }
-//   }
+    //   stage('Performance Test') {
+    //     steps {
+    //       sh 'ngrinder_agent run'
+    //       sh 'ngrinder_controller test'
+    //     }
+    //   }
  }
 }

@@ -6,6 +6,7 @@ import com.example.numbletimedealserver.request.LoginRequest
 import com.example.numbletimedealserver.request.SignUpRequest
 import com.example.numbletimedealserver.service.customer.CustomerService
 import com.example.numbletimedealserver.service.product.ProductService
+import jakarta.servlet.http.HttpSession
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
@@ -25,8 +26,11 @@ class CustomerController(private val productService: ProductService, private val
         return customerService.signup(signupRequest).let{ResponseEntity.ok(it)}
     }
     @PostMapping("/login")
-    fun login(@RequestBody loginRequest: LoginRequest):ResponseEntity<CustomerDto>{
-        return customerService.login(loginRequest).let { ResponseEntity.ok(it) }
+    fun login(@RequestBody loginRequest: LoginRequest, httpSession: HttpSession):ResponseEntity<CustomerDto>{
+        val loginresult=customerService.login(loginRequest)
+        httpSession.setAttribute("user", loginresult)
+        httpSession.maxInactiveInterval = 15000
+        return ResponseEntity.ok(loginresult)
     }
     @PostMapping("/resign")
     fun resign(@SessionLogin loggedinUser:CustomerDto):ResponseEntity<String>{

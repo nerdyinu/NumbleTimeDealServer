@@ -1,3 +1,5 @@
 package com.example.numbletimedealserver.request
 
-data class LoginRequest(val username:String, val pw:String)
+import java.io.Serializable
+
+data class LoginRequest(val username:String, val pw:String): Serializable

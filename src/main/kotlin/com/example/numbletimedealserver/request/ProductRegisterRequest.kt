@@ -1,5 +1,6 @@
 package com.example.numbletimedealserver.request
 
+import java.io.Serializable
 import java.time.LocalTime
 
 data class ProductRegisterRequest(
@@ -7,4 +8,4 @@ data class ProductRegisterRequest(
     val description: String,
     val appointedTime: LocalTime,
     val appointedQuantity: Long
-)
+): Serializable

@@ -28,7 +28,7 @@ class CustomerController(private val productService: ProductService, private val
     fun login(@RequestBody loginRequest: LoginRequest):ResponseEntity<CustomerDto>{
         return customerService.login(loginRequest).let { ResponseEntity.ok(it) }
     }
-    @DeleteMapping("/user")
+    @PostMapping("/resign")
     fun resign(@SessionLogin loggedinUser:CustomerDto):ResponseEntity<String>{
         customerService.resign(loggedinUser.id)
         return ResponseEntity.ok().build()

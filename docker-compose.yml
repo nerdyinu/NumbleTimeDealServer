@@ -1,4 +1,4 @@
-version: '3.8'
+zversion: '3.8'
 services:
   controller:
     container_name: controller

@@ -54,13 +54,13 @@ pipeline {
             }
           }
         }
-        stage("run ngrinder"){
-          steps {
-           script {
-             sh "docker compose up && docker compose rm -fsv"
-           }
-         }
-        }
+//         stage("run ngrinder"){
+//           steps {
+//            script {
+//              sh "docker compose up && docker compose rm -fsv"
+//            }
+//          }
+//         }
 
  }
 }

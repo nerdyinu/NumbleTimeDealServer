@@ -7,6 +7,7 @@ import com.example.numbletimedealserver.request.SignUpRequest
 import com.example.numbletimedealserver.service.customer.CustomerService
 import com.example.numbletimedealserver.service.product.ProductService
 import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.servlet.http.HttpSession
 import org.springframework.data.domain.Page
@@ -30,9 +31,10 @@ class CustomerController(private val productService: ProductService, private val
         return customerService.signup(signupRequest).let{ResponseEntity.ok(it)}
     }
     @PostMapping("/login")
-    fun login(@RequestBody loginRequest: LoginRequest, httpSession: HttpSession, response: HttpServletResponse):ResponseEntity<CustomerDto>{
+    fun login(@RequestBody loginRequest: LoginRequest, httpServletRequest: HttpServletRequest):ResponseEntity<CustomerDto>{
         val loginresult=customerService.login(loginRequest)
-        httpSession.setAttribute("user", loginRequest)
+        val session = httpServletRequest.getSession(false)
+        session.setAttribute("user", loginRequest)
         return ResponseEntity.ok(loginresult)
     }
     @PostMapping("/resign")

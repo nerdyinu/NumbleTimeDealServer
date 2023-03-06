@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 @RestController
@@ -59,10 +61,11 @@ class ProductController(private val productService: ProductService, private val 
     @GetMapping("/products/user")
     fun productListUser(
         @SessionLogin loginUser: CustomerDto,
-        @RequestBody productListCondition: ProductListCondition,
+        @RequestParam params:Map<String,String> ,
         pageable: Pageable
-    ): ResponseEntity<Page<ProductDto>> =
+    ): ResponseEntity<Page<ProductDto>> {
+        val  productListCondition = ProductListCondition(LocalDate.parse(params.get("from")), LocalDate.parse(params.get("to")))
         productService.getAllProductsBought(loginUser.id, productListCondition, pageable)
             .let { ResponseEntity.ok(it) }
-
+    }
 }

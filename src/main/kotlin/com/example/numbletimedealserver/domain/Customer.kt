@@ -14,7 +14,7 @@ class Customer (
     @Column(nullable = false)
     val role:ROLE,
     @JsonManagedReference
-    @OneToMany(mappedBy = "customer", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "customer")
     @BatchSize(size = 100)
     private val _orders:MutableList<Order> = mutableListOf(),
 

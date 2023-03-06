@@ -20,7 +20,7 @@ class Product(
     private var _appointedTime: LocalTime,
     @Column(nullable = false, name = "appointed_quantity")
     private var _appointedQuantity: Long,
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = [CascadeType.ALL])
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "admin_id")
     val admin: Customer,
     @Column(nullable = false, name = "stock")

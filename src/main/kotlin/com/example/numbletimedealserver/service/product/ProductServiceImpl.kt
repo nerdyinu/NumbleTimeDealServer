@@ -30,25 +30,27 @@ class ProductServiceImpl(
     override fun update(productId: UUID, adminId: UUID, productUpdateRequest: ProductUpdateRequest): ProductDto {
         val product =
             productRepository.findByIdAndAdminId(productId, adminId) ?: throw CustomException.ProductNotFoundException()
-        val (name, desc, time, quantity) = productUpdateRequest
-        name?.let { product.updateName(it) }
-        desc?.let { product.updateDesc(it) }
-        time?.let { product.updateTime(it) }
-        quantity?.let { product.updateAppointedQuantity(it) }
+        productUpdateRequest.also { (name, desc, time, quantity) ->
+            product.update(
+                time = time,
+                quantity = quantity,
+                newName = name,
+                desc = desc
+            )
+        }
+
         return ProductDto(product)
     }
 
     @Transactional
-    override fun dailyUpdate(productId: UUID): ProductDto {
-        val product =
-            productRepository.findById(productId).orElse(null) ?: throw CustomException.ProductNotFoundException()
-        product.dailyUpdate()
-        return ProductDto(product)
-    }
+    override fun dailyUpdate(productId: UUID): ProductDto =
+        productRepository.findById(productId).orElse(null)?.also { it.dailyUpdate() }?.let(::ProductDto)
+            ?: throw CustomException.ProductNotFoundException()
 
-    override fun findAllByAppointedTime(start: LocalTime, end: LocalTime): List<ProductDto> {
-        return productRepository.findAllByAppointedTimeBetween(start, end).map(::ProductDto)
-    }
+
+    override fun findAllByAppointedTime(start: LocalTime, end: LocalTime): List<ProductDto> =
+        productRepository.findAllByAppointedTimeBetween(start, end).map(::ProductDto)
+
 
     override fun register(adminId: UUID, productRegisterRequest: ProductRegisterRequest): ProductDto {
         val (name, desc, time, quantity) = productRegisterRequest
@@ -84,7 +86,12 @@ class ProductServiceImpl(
     }
 
     override fun delete(productId: UUID, adminId: UUID) {
-        val product =productRepository.findByIdAndAdminId(productId,adminId) ?: throw CustomException.ProductNotFoundException()
+        productRepository.findByIdAndAdminId(productId, adminId) ?: throw CustomException.ProductNotFoundException()
         productRepository.deleteById(productId)
     }
+
+    override fun productDetail(productId: UUID): ProductDto =
+        productRepository.findById(productId).orElse(null)?.let(::ProductDto)
+            ?: throw CustomException.ProductNotFoundException()
+
 }

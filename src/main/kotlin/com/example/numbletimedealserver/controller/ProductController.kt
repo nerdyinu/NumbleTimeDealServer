@@ -1,7 +1,6 @@
 package com.example.numbletimedealserver.controller
 
 
-
 import com.example.numblebankingserverchallenge.config.SessionLogin
 import com.example.numbletimedealserver.dto.CustomerDto
 import com.example.numbletimedealserver.dto.ProductDto
@@ -23,18 +22,16 @@ class ProductController(private val productService: ProductService, private val 
     fun register(
         @RequestBody productRegisterRequest: ProductRegisterRequest,
         @SessionLogin(admin = true) admin: CustomerDto
-    ): ProductDto {
-        return productService.register(admin.id, productRegisterRequest)
-    }
+    ): ProductDto = productService.register(admin.id, productRegisterRequest)
+
 
     @PutMapping("/product/{productId}")
     fun update(
         @PathVariable("productId") productId: UUID,
         @RequestBody productUpdateRequest: ProductUpdateRequest,
         @SessionLogin(admin = true) admin: CustomerDto
-    ): ProductDto {
-        return productService.update(productId, admin.id, productUpdateRequest)
-    }
+    ): ProductDto = productService.update(productId, admin.id, productUpdateRequest)
+
 
     @DeleteMapping("/product/{productId}")
     fun delete(
@@ -45,22 +42,27 @@ class ProductController(private val productService: ProductService, private val 
         return ResponseEntity.ok().build()
     }
 
+    @GetMapping("/product/{productId}")
+    fun productDetail(
+        @PathVariable("productId") productId: UUID,
+        @SessionLogin customer: CustomerDto
+    ): ResponseEntity<ProductDto> = productService.productDetail(productId).let { ResponseEntity.ok(it) }
+
     @GetMapping("/products/admin")
     fun productListAdmin(
         @SessionLogin(admin = true) admin: CustomerDto,
         pageable: Pageable
-    ): ResponseEntity<Page<ProductDto>> {
-        return productService.getAllProductsRegistered(admin.id, pageable).let { ResponseEntity.ok(it) }
+    ): ResponseEntity<Page<ProductDto>> =
+        productService.getAllProductsRegistered(admin.id, pageable).let { ResponseEntity.ok(it) }
 
-    }
 
     @GetMapping("/products/user")
     fun productListUser(
         @SessionLogin loginUser: CustomerDto,
         @RequestBody productListCondition: ProductListCondition,
         pageable: Pageable
-    ): ResponseEntity<Page<ProductDto>> {
-        return productService.getAllProductsBought(loginUser.id, productListCondition, pageable)
+    ): ResponseEntity<Page<ProductDto>> =
+        productService.getAllProductsBought(loginUser.id, productListCondition, pageable)
             .let { ResponseEntity.ok(it) }
-    }
+
 }

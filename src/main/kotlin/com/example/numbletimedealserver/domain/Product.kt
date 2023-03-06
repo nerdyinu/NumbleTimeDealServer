@@ -35,24 +35,17 @@ class Product(
         this._stockQuantity = appointedQuantity
     }
 
-    fun updateTime(time: LocalTime) {
-        _appointedTime = time
-    }
+
 
     fun descStock() {
         if (_stockQuantity == 0L) throw CustomException.BadRequestException()
         _stockQuantity --
     }
-
-    fun updateAppointedQuantity(quantity: Long) {
-        _appointedQuantity = quantity
+    fun update(time:LocalTime?=null, quantity: Long?=null, newName: String?=null,desc: String?=null){
+        time?.let{_appointedTime=it}
+        quantity?.let{_appointedQuantity=it}
+        newName?.let { _name=it }
+        desc?.let{_description=it}
     }
 
-    fun updateName(newName: String) {
-        _name = newName
-    }
-
-    fun updateDesc(desc: String) {
-        _description = desc
-    }
 }

@@ -21,7 +21,7 @@ class ProductController(private val productService: ProductService, private val 
     //상품 : 삭제/목록/상세 기능
     @PostMapping("/register")
     fun register(
-        productRegisterRequest: ProductRegisterRequest,
+        @RequestBody productRegisterRequest: ProductRegisterRequest,
         @SessionLogin(admin = true) admin: CustomerDto
     ): ProductDto {
         return productService.register(admin.id, productRegisterRequest)
@@ -30,7 +30,7 @@ class ProductController(private val productService: ProductService, private val 
     @PutMapping("/product/{productId}")
     fun update(
         @PathVariable("productId") productId: UUID,
-        productUpdateRequest: ProductUpdateRequest,
+        @RequestBody productUpdateRequest: ProductUpdateRequest,
         @SessionLogin(admin = true) admin: CustomerDto
     ): ProductDto {
         return productService.update(productId, admin.id, productUpdateRequest)
@@ -57,7 +57,7 @@ class ProductController(private val productService: ProductService, private val 
     @GetMapping("/products/user")
     fun productListUser(
         @SessionLogin loginUser: CustomerDto,
-        productListCondition: ProductListCondition,
+        @RequestBody productListCondition: ProductListCondition,
         pageable: Pageable
     ): ResponseEntity<Page<ProductDto>> {
         return productService.getAllProductsBought(loginUser.id, productListCondition, pageable)

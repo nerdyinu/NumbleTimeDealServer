@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.servlet.http.HttpSession
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpCookie
 import org.springframework.http.ResponseEntity
@@ -44,6 +45,7 @@ class CustomerController(private val productService: ProductService, private val
     }
     @GetMapping("/users")
     fun listUsers(pageable: Pageable):ResponseEntity<Page<CustomerDto>>{
+
         return customerService.getAll(pageable).let { ResponseEntity.ok(it) }
     }
 }

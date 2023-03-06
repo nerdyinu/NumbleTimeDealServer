@@ -28,9 +28,8 @@ class SessionLoginHandlerMethodArgumentResolver : HandlerMethodArgumentResolver 
         binderFactory: WebDataBinderFactory?
     ): CustomerDto {
         val request = webRequest.nativeRequest as? HttpServletRequest
-
-        val member =
-            request?.session?.getAttribute("user") as? CustomerDto ?: throw CustomException.NotLoggedInException()
+        val session = request?.getSession(false) ?:throw CustomException.NotLoggedInException()
+        val member = session.getAttribute("user") as? CustomerDto ?: throw CustomException.NotLoggedInException()
         val isAdmin = parameter.getParameterAnnotation(SessionLogin::class.java)!!.admin
         if(isAdmin && member.role!=ROLE.ADMIN)throw CustomException.ForbiddenException()
         return member

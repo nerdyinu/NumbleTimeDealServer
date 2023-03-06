@@ -32,10 +32,10 @@ class CustomerController(private val productService: ProductService, private val
     }
     @PostMapping("/login")
     fun login(@RequestBody loginRequest: LoginRequest, httpServletRequest: HttpServletRequest):ResponseEntity<CustomerDto>{
-        val loginresult=customerService.login(loginRequest)
-        val session = httpServletRequest.getSession(false)
-        session.setAttribute("user", loginRequest)
-        return ResponseEntity.ok(loginresult)
+        val loginResult=customerService.login(loginRequest)
+        val session = httpServletRequest.getSession(true)
+        session.setAttribute("user", loginResult)
+        return ResponseEntity.ok(loginResult)
     }
     @PostMapping("/resign")
     fun resign(@SessionLogin loggedinUser:CustomerDto):ResponseEntity<String>{

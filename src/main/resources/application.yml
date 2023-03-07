@@ -21,6 +21,5 @@ logging:
     #    org.hibernate.sql: debug
     org.hibernate.sql: info
     org.hibernate.jdbc.bind: trace
-server:
-  port: 9060
+
 

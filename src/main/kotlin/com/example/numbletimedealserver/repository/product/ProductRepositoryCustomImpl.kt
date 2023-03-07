@@ -5,12 +5,13 @@ import com.example.numbletimedealserver.domain.QProduct.product
 import com.querydsl.jpa.impl.JPAQuery
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.LockModeType
+import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import java.time.LocalTime
 import java.util.*
 
 
-@Service
+@Repository
 class ProductRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) : ProductRepositoryCustom {
 
     override fun findAllByAppointedTimeBetween(start: LocalTime, end: LocalTime): List<Product> =

@@ -10,11 +10,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.support.PageableExecutionUtils
+import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.util.*
 
-@Service
+@Repository
 class OrderRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) : OrderRepositoryCustom {
     override fun findAllByCustomerId(customerId: UUID, productListCondition: ProductListCondition): List<Order> {
         val (from, to) = productListCondition

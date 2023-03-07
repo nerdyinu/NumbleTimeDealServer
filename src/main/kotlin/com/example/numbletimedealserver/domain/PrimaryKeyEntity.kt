@@ -54,7 +54,7 @@ abstract class PrimaryKeyEntity(
     private fun getIdentifier(obj: Any): Serializable =
         if (obj is HibernateProxy) obj.hibernateLazyInitializer.identifier as Serializable else (obj as PrimaryKeyEntity).id
 
-    override fun hashCode(): Int = Objects.hashCode(id)
+    override fun hashCode(): Int = id.hashCode()
 
 
 }

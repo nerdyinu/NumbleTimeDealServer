@@ -1,11 +1,9 @@
-
 spring:
   datasource:
     url: jdbc:mariadb://db:3306/timedeal
     username: root
     password: 32518458
     driver-class-name: org.mariadb.jdbc.Driver
-
 
   jpa:
     defer-datasource-initialization: true

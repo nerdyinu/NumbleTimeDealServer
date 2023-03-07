@@ -61,10 +61,10 @@ class ProductController(private val productService: ProductService, private val 
     @GetMapping("/products/user")
     fun productListUser(
         @SessionLogin loginUser: CustomerDto,
-        @RequestParam params:Map<String,String> ,
+        @RequestBody productListCondition: ProductListCondition ,
         pageable: Pageable
     ): ResponseEntity<Page<ProductDto>> {
-        val  productListCondition = ProductListCondition(LocalDate.parse(params.get("from")), LocalDate.parse(params.get("to")))
+
         return productService.getAllProductsBought(loginUser.id, productListCondition, pageable)
             .let { ResponseEntity.ok(it) }
     }

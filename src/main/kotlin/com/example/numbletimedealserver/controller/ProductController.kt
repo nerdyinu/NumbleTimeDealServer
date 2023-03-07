@@ -61,7 +61,7 @@ class ProductController(private val productService: ProductService, private val 
     @GetMapping("/products/user")
     fun productListUser(
         @SessionLogin loginUser: CustomerDto,
-        @RequestBody productListCondition: ProductListCondition ,
+        @ModelAttribute productListCondition: ProductListCondition ,
         pageable: Pageable
     ): ResponseEntity<Page<ProductDto>> {
 

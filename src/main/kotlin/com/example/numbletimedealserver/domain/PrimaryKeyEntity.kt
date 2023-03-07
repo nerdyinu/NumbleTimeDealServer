@@ -22,8 +22,8 @@ abstract class PrimaryKeyEntity(
     updatedDate: LocalDateTime = LocalDateTime.now()
 ) : Persistable<UUID> {
     @Id
-    @Column(columnDefinition = "uuid")
-    private val id: UUID = UlidCreator.getMonotonicUlid().toUuid()
+    @Column(name="uuid")
+    private val id:UUID = UlidCreator.getMonotonicUlid().toUuid()
 
     @Transient
     private var _isNew = true

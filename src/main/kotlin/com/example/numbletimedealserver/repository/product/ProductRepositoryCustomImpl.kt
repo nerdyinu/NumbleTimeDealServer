@@ -11,7 +11,7 @@ import java.time.LocalTime
 import java.util.*
 
 
-@Repository
+
 class ProductRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) : ProductRepositoryCustom {
 
     override fun findAllByAppointedTimeBetween(start: LocalTime, end: LocalTime): List<Product> =

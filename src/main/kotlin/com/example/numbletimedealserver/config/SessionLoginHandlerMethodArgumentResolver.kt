@@ -29,7 +29,6 @@ class SessionLoginHandlerMethodArgumentResolver : HandlerMethodArgumentResolver 
         val request = webRequest.nativeRequest as? HttpServletRequest
         val member = request?.getSession(false)?.getAttribute("user") as? CustomerDto
             ?: throw CustomException.NotLoggedInException()
-        println("logged in!!::: ${member.id}")
         val isAdmin = parameter.getParameterAnnotation(SessionLogin::class.java)!!.admin
         if (isAdmin && member.role != ROLE.ADMIN) throw CustomException.ForbiddenException()
         return member

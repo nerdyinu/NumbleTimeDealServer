@@ -8,10 +8,10 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Repository
 
-@Repository
+
 class CustomerRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory):CustomerRepositoryCustom{
     override fun findByUsernameAndPassword(username: String, pw: String): Customer? {
-        return jpaQueryFactory.selectFrom(customer).where(customer.name.eq(username).and(customer.password.eq(pw))).fetchOne()?.also { println("로그인 조회 ID:::${it.id}") }
+        return jpaQueryFactory.selectFrom(customer).where(customer.name.eq(username).and(customer.password.eq(pw))).fetchOne()
     }
 
     override fun pageAll(pageable: Pageable): Page<Customer> {

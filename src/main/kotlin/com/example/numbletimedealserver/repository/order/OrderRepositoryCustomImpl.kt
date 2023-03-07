@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.util.*
 
-@Repository
+
 class OrderRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) : OrderRepositoryCustom {
     override fun findAllByCustomerId(customerId: UUID, productListCondition: ProductListCondition): List<Order> {
         val (from, to) = productListCondition

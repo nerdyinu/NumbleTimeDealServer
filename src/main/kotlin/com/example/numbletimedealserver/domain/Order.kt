@@ -14,4 +14,5 @@ class Order(
     @Column(nullable = false)
     val quantity:Int = 1
 ) :PrimaryKeyEntity(){
+
 }

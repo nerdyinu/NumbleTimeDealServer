@@ -31,7 +31,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    implementation("org.mariadb.jdbc:mariadb-java-client")
     //querydsl
+
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("org.springframework.boot:spring-boot-configuration-processor")

@@ -1,5 +1,4 @@
-server:
-  port: 9050
+
 spring:
   datasource:
     url: jdbc:mariadb://db:3306/timedeal
@@ -19,10 +18,10 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
     database-platform: MySQL
-
 logging:
   level:
     #    org.hibernate.sql: debug
     org.hibernate.sql: info
     org.hibernate.jdbc.bind: trace
+
 

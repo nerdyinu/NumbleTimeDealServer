@@ -27,9 +27,9 @@ class Product(
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "admin_id")
     val admin: Customer,
-    
+
     @Column(nullable = false, name = "stock")
-    private var _stockQuantity: Long = 0L,
+    private var _stockQuantity: Long = 100L,
 ) : PrimaryKeyEntity() {
     val name get() = _name
     val description get() = _description

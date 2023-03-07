@@ -1,4 +1,12 @@
 
+spring:
+  datasource:
+    url: jdbc:mariadb://db:3306/timedeal
+    username: root
+    password: 32518458
+    driver-class-name: org.mariadb.jdbc.Driver
+
+
   jpa:
     defer-datasource-initialization: true
     hibernate:
@@ -11,10 +19,10 @@
         dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
     database-platform: MySQL
-
 logging:
   level:
     #    org.hibernate.sql: debug
     org.hibernate.sql: info
     org.hibernate.jdbc.bind: trace
+
 

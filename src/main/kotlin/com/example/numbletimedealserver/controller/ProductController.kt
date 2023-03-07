@@ -65,7 +65,7 @@ class ProductController(private val productService: ProductService, private val 
         pageable: Pageable
     ): ResponseEntity<Page<ProductDto>> {
         val  productListCondition = ProductListCondition(LocalDate.parse(params.get("from")), LocalDate.parse(params.get("to")))
-        productService.getAllProductsBought(loginUser.id, productListCondition, pageable)
+        return productService.getAllProductsBought(loginUser.id, productListCondition, pageable)
             .let { ResponseEntity.ok(it) }
     }
 }

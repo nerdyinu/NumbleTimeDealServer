@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
@@ -20,6 +21,7 @@ class CustomerServiceImpl(private val customerRepository: CustomerRepository) : 
         return customerRepository.save(Customer(name, pw, role)).let(::CustomerDto)
     }
 
+    @Transactional(readOnly = true)
     override fun login(loginRequest: LoginRequest): CustomerDto =
         customerRepository.findByUsernameAndPassword(loginRequest.username, loginRequest.pw)?.let(::CustomerDto)
             ?: throw CustomException.UserNotFoundException()

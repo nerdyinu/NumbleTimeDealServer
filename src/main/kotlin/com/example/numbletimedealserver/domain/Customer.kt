@@ -10,6 +10,7 @@ import org.hibernate.annotations.BatchSize
 @Entity
 class Customer (
     name:String,
+    @Column
     var password:String,
     @Column(nullable = false)
     val role:ROLE,
@@ -19,7 +20,7 @@ class Customer (
     private val _orders:MutableList<Order> = mutableListOf(),
 
 ):PrimaryKeyEntity(){
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var name:String = name
         protected set
     val orders:List<Order> get() = _orders

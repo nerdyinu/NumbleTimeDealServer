@@ -53,6 +53,7 @@ class ProductServiceImpl(
 
 
     override fun register(adminId: UUID, productRegisterRequest: ProductRegisterRequest): ProductDto {
+        println(adminId)
         val (name, desc, time, quantity) = productRegisterRequest
         val admin = customerRepository.findById(adminId).orElse(null) ?: throw CustomException.UserNotFoundException()
         return productRepository.save(Product(name, desc, time, quantity, admin)).let(::ProductDto)

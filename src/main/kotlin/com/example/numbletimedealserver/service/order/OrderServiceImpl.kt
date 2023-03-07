@@ -19,8 +19,9 @@ class OrderServiceImpl(
 ) : OrderService {
     @Transactional
     override fun createOrder(customerId: UUID, productId: UUID): OrderDto {
+
         val product =
-            productRepository.findByIdLockOption(customerId, true) ?: throw CustomException.ProductNotFoundException()
+            productRepository.findByIdLockOption(productId, true) ?: throw CustomException.ProductNotFoundException()
         val customer =
             customerRepository.findById(customerId).orElse(null) ?: throw CustomException.UserNotFoundException()
         product.descStock()

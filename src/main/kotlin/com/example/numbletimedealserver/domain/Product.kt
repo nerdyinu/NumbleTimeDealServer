@@ -14,15 +14,20 @@ class Product(
 
     @Column(nullable = false)
     private var _name: String,
+
     @Column
     private var _description: String,
+
     @Column(nullable = false, name = "appointed_time")
     private var _appointedTime: LocalTime,
+
     @Column(nullable = false, name = "appointed_quantity")
     private var _appointedQuantity: Long,
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "admin_id")
     val admin: Customer,
+    
     @Column(nullable = false, name = "stock")
     private var _stockQuantity: Long = 0L,
 ) : PrimaryKeyEntity() {

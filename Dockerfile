@@ -1,5 +1,4 @@
 FROM openjdk:17-jdk-slim
-
 WORKDIR /app
 COPY build/libs/*.jar myapp.jar
 COPY pinpoint-agent-2.5.0.tar.gz pinpoint-agent.tar.gz

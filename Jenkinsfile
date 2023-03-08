@@ -50,7 +50,7 @@ pipeline {
 
             sh 'docker stop myapp || true'
               sh 'docker rm myapp || true'
-              sh "docker run -p 7070:8080 -d --name myapp --network timedeal inust33/myapp:${env.BUILD_NUMBER}"
+              sh "docker run -p 7070:8000 -d --name myapp --network timedeal inust33/myapp:${env.BUILD_NUMBER}"
             }
           }
         }

@@ -54,14 +54,14 @@ pipeline {
             }
           }
         }
-        stage("run pinpoint container"){
-            steps{
-                script{
-                    sh 'docker compose down'
-                    sh 'docker compose up -d'
-                }
-            }
-        }
+//         stage("run pinpoint container"){
+//             steps{
+//                 script{
+//                     sh 'docker compose down'
+//                     sh 'docker compose up -d'
+//                 }
+//             }
+//         }
 //         stage("run ngrinder"){
 //           steps {
 //            script {

@@ -6,10 +6,10 @@ import com.example.numbletimedealserver.request.LoginRequest
 import com.example.numbletimedealserver.request.SignUpRequest
 import com.example.numbletimedealserver.service.customer.CustomerService
 import com.example.numbletimedealserver.service.product.ProductService
-import jakarta.servlet.http.Cookie
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
-import jakarta.servlet.http.HttpSession
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpSession
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable

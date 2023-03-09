@@ -1,7 +1,7 @@
 package com.example.numbletimedealserver.domain
 
 import com.example.numbletimedealserver.exception.CustomException
-import jakarta.persistence.*
+import javax.persistence.*
 import java.time.LocalTime
 
 @Entity

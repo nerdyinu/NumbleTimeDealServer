@@ -4,7 +4,7 @@ package com.example.numbletimedealserver.domain
 
 
 import com.github.f4b6a3.ulid.UlidCreator
-import jakarta.persistence.*
+import javax.persistence.*
 import org.hibernate.proxy.HibernateProxy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate

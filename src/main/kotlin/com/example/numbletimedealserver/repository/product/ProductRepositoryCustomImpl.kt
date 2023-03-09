@@ -1,10 +1,12 @@
 package com.example.numbletimedealserver.repository.product
 
 import com.example.numbletimedealserver.domain.Product
-import com.example.numbletimedealserver.domain.QProduct.product
+import com.example.numbletimedealserver.domain.QProduct
+import com.example.numbletimedealserver.domain.QProduct.*
+
 import com.querydsl.jpa.impl.JPAQuery
 import com.querydsl.jpa.impl.JPAQueryFactory
-import jakarta.persistence.LockModeType
+import javax.persistence.LockModeType
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import java.time.LocalTime

@@ -3,7 +3,7 @@ WORKDIR /app
 COPY build/libs/*.jar myapp.jar
 COPY pinpoint-agent-2.5.0.tar.gz pinpoint-agent.tar.gz
 RUN tar -zxvf pinpoint-agent.tar.gz
-RUN cd pinppoint-agent-2.5.0 && ls
+RUN cd pinpoint-agent-2.5.0 && ls
 RUN chmod 755 /pinpoint-agent-2.5.0/pinpoint-bootstrap-2.5.0.jar
 
 EXPOSE 8000

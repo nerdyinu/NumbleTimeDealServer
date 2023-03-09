@@ -14,8 +14,8 @@ import org.springframework.web.filter.HiddenHttpMethodFilter
 class NumbleTimeDealServerApplication{
     @PersistenceContext
     lateinit var em:EntityManager
-//    @Bean
-//    fun jpaQueryFactory():JPAQueryFactory = JPAQueryFactory(em)
+    @Bean
+    fun jpaQueryFactory():JPAQueryFactory = JPAQueryFactory(em)
 
     @Bean
     fun hiddenHttpMethodFilter(): HiddenHttpMethodFilter =HiddenHttpMethodFilter()

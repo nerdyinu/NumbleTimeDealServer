@@ -1,7 +1,6 @@
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY build/libs/*.jar myapp.jar
-
 RUN wget https://github.com/pinpoint-apm/pinpoint/releases/download/v2.5.0/pinpoint-agent-2.5.0.tar.gz
 RUN tar -zxvf pinpoint-agent-2.5.0.tar.gz
 RUN ls pinpoint-agent-2.5.0

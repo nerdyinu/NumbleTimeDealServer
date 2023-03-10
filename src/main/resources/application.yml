@@ -16,7 +16,7 @@ spring:
       hibernate:
         globally_quoted_identifiers: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.MySQL57Dialect
     show-sql: true
     database-platform: MySQL
 logging:

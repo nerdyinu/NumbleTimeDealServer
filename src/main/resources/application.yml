@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     url: jdbc:mariadb://db:3306/timedeal
@@ -5,8 +6,6 @@ spring:
     password: 32518458
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
-
-
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
@@ -24,3 +23,4 @@ logging:
     #    org.hibernate.sql: debug
     org.hibernate.sql: info
     org.hibernate.jdbc.bind: trace
+

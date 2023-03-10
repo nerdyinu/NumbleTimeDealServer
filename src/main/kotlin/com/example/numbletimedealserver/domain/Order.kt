@@ -3,7 +3,7 @@ package com.example.numbletimedealserver.domain
 import javax.persistence.*
 
 @Entity
-@Table(name = "ORDER_TABLE")
+@Table(name = "orders")
 class Order(
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id")

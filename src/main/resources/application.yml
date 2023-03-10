@@ -5,6 +5,8 @@ spring:
     password: 32518458
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
+
+
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
@@ -12,6 +14,7 @@ spring:
       format_sql: true
       show_sql: true
       hibernate:
+        globally_quoted_identifiers: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true

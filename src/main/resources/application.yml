@@ -16,9 +16,9 @@ spring:
       hibernate:
         globally_quoted_identifiers: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MySQL57Dialect
+        dialect: org.hibernate.dialect.MariaDBDialect
     show-sql: true
-    database-platform: MySQL
+    database-platform: MariaDB
 logging:
   level:
     #    org.hibernate.sql: debug

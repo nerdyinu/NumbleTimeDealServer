@@ -55,4 +55,5 @@ class ProductRepositoryTest @Autowired constructor(
         println("end::::")
 //        assertThat(res).extracting("name").contain("book1", "book2")
     }
+
 }

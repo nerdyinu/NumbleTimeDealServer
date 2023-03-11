@@ -19,6 +19,7 @@ import java.util.*
 class OrderRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) : OrderRepositoryCustom {
     override fun findAllByCustomerId(customerId: UUID, productListCondition: ProductListCondition): List<Order> {
         val (from, to) = productListCondition
+        println("$from, $to")
         val start = from?.let { it.atStartOfDay() }
         val end = to?.let { it.atStartOfDay().plusDays(1L) }
         return jpaQueryFactory.selectFrom(order).where(

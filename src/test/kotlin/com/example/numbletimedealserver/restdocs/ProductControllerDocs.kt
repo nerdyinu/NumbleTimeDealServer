@@ -1,10 +1,7 @@
 package com.example.numbletimedealserver.restdocs
 
 import com.example.numblebankingserverchallenge.config.SessionLogin
-import com.example.numbletimedealserver.DATETIME
-import com.example.numbletimedealserver.NUMBER
-import com.example.numbletimedealserver.RestDocsConfig
-import com.example.numbletimedealserver.STRING
+import com.example.numbletimedealserver.*
 import com.example.numbletimedealserver.domain.Customer
 import com.example.numbletimedealserver.domain.Product
 import com.example.numbletimedealserver.domain.ROLE
@@ -89,7 +86,8 @@ class ProductControllerDocs @Autowired constructor(
                 customer
             )
         )
-        val found = productRepository.findById(product.id).orElse(null) ?: throw CustomException.ProductNotFoundException()
+        val found =
+            productRepository.findById(product.id).orElse(null) ?: throw CustomException.ProductNotFoundException()
 
     }
 
@@ -168,7 +166,8 @@ class ProductControllerDocs @Autowired constructor(
             registerRequest.appointedQuantity.plus(10L)
         )
         mockMvc.perform(
-            RestDocumentationRequestBuilders.put("/product/${product.id}").contentType(MediaType.APPLICATION_JSON)
+            RestDocumentationRequestBuilders.put("/product/{productId}", product.id)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(updateRequest)).sessionAttrs(mapOf("user" to CustomerDto(customer)))
         ).andExpect(status().isOk)
 
@@ -177,16 +176,12 @@ class ProductControllerDocs @Autowired constructor(
             .andExpect(jsonPath("$.description").value(updateRequest.description))
             .andExpect(
                 jsonPath("$.appointedTime").value(
-                    updateRequest.appointedTime?.format(
-                        DateTimeFormatter.ofPattern(
-                            "HH:mm:ss"
-                        )
-                    )
-                )
+                    mapper.writeValueAsString(updateRequest.appointedTime).trim { it == '\"' })
             )
             .andDo(
                 document(
                     myIdentifier("상품수정"),
+                    pathParameters(parameterWithName("productId").description("상품 id")),
                     requestFields(
                         fieldWithPath("name").optional().type(STRING).description("상품명"),
                         fieldWithPath("description").optional().type(STRING).description("상품 설명"),
@@ -203,6 +198,7 @@ class ProductControllerDocs @Autowired constructor(
                 )
             )
     }
+
     /*
     @DeleteMapping("/product/{productId}")
     fun delete(
@@ -211,30 +207,142 @@ class ProductControllerDocs @Autowired constructor(
     ): ResponseEntity<String> {
         productService.delete(productId, admin.id)
         return ResponseEntity.ok().build()
+    }*/
+    @Test
+    fun deleteUser() {
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.delete("/user").contentType(MediaType.APPLICATION_JSON)
+                .sessionAttrs(mapOf("user" to CustomerDto(customer)))
+        ).andExpect(status().isOk)
+            .andDo(
+                document(
+                    myIdentifier("회원탈퇴"),
+                    requestBody(), responseBody()
+                )
+            )
     }
 
-    @GetMapping("/product/{productId}")
-    fun productDetail(
-        @PathVariable("productId") productId: UUID,
-        @SessionLogin customer: CustomerDto
-    ): ResponseEntity<ProductDto> = productService.productDetail(productId).let { ResponseEntity.ok(it) }
+    /*
+        @GetMapping("/product/{productId}")
+        fun productDetail(
+            @PathVariable("productId") productId: UUID,
+            @SessionLogin customer: CustomerDto
+        ): ResponseEntity<ProductDto> = productService.productDetail(productId).let { ResponseEntity.ok(it) }
+        */
+    @Test
+    fun productDetail() {
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/product/{productId}", product.id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .sessionAttrs(mapOf("user" to CustomerDto(customer)))
+        ).andExpect(status().isOk)
 
-    @GetMapping("/products/admin")
-    fun productListAdmin(
-        @SessionLogin(admin = true) admin: CustomerDto,
-        pageable: Pageable
-    ): ResponseEntity<Page<ProductDto>> =
-        productService.getAllProductsRegistered(admin.id, pageable).let { ResponseEntity.ok(it) }
+            .andExpect(jsonPath("$.id").value(product.id.toString()))
+            .andExpect(jsonPath("$.name").value(product.name))
+            .andExpect(jsonPath("$.description").value(product.description))
+            .andExpect(
+                jsonPath("$.appointedTime").value(mapper.writeValueAsString(product.appointedTime).trim('\"'))
+            )
+            .andDo(
+                document(
+                    myIdentifier("상품상세"),
+                    pathParameters(parameterWithName("productId").description("상품 id")),
+                    responseFields(
+                        fieldWithPath("id").type(STRING).description("상품 id"),
+                        fieldWithPath("name").type(STRING).description("상품명"),
+                        fieldWithPath("description").type(STRING).description("상품 설명"),
+                        fieldWithPath("appointedTime").type(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("appointedQuantity").type(NUMBER).description("상품 거래 수량")
+                    )
+                )
+            )
+    }
 
+    /*
+        @GetMapping("/products/admin")
+        fun productListAdmin(
+            @SessionLogin(admin = true) admin: CustomerDto,
+            pageable: Pageable
+        ): ResponseEntity<Page<ProductDto>> =
+            productService.getAllProductsRegistered(admin.id, pageable).let { ResponseEntity.ok(it) }
+        */
+    @Test
+    fun productListAdmin() {
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/products/admin").accept(MediaType.APPLICATION_JSON)
+                .sessionAttrs(mapOf("user" to CustomerDto(customer)))
+        ).andExpect(status().isOk)
+            .andDo(
+                document(
+                    myIdentifier("상품목록/어드민"),
+                    queryParameters(
+                        parameterWithName("page").optional().description("페이지 번호"),
+                        parameterWithName("size").optional().description("페이지당 크기"),
+                        parameterWithName("sort").optional().description("정렬 기준")
+                    ),
+                    relaxedResponseFields(
+                        fieldWithPath("content[].id").type(STRING).description("상품 id"),
+                        fieldWithPath("content[].name").type(STRING).description("상품명"),
+                        fieldWithPath("content[].description").type(STRING).description("상품 설명"),
+                        fieldWithPath("content[].appointedTime").type(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("content[].appointedQuantity").type(NUMBER).description("상품 거래 수량"),
+                        fieldWithPath("last").type(BOOLEAN).description("Whether this is the last page"),
+                        fieldWithPath("totalPages").type(NUMBER).description("The total number of pages"),
+                        fieldWithPath("totalElements").type(NUMBER).description("The total number of elements"),
+                        fieldWithPath("size").type(NUMBER).description("The size of the page"),
+                        fieldWithPath("number").type(NUMBER).description("The current page number"),
+                        fieldWithPath("first").type(BOOLEAN).description("Whether this is the first page"),
+                        fieldWithPath("numberOfElements").type(NUMBER)
+                            .description("The number of elements on this page"),
+                        fieldWithPath("empty").type(BOOLEAN).description("Whether this page is empty")
+                    ),
+                )
+            )
+    }
+
+    /*
 
     @GetMapping("/products/user")
     fun productListUser(
         @SessionLogin loginUser: CustomerDto,
         @ModelAttribute productListCondition: ProductListCondition,
         pageable: Pageable
-    ): ResponseEntity<Page<ProductDto>> {
-
-        return productService.getAllProductsBought(loginUser.id, productListCondition, pageable)
+    ): ResponseEntity<Page<ProductDto>> = productService.getAllProductsBought(loginUser.id, productListCondition, pageable)
             .let { ResponseEntity.ok(it) }
     }*/
+    @Test
+    fun productListUser() {
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/products/user").accept(MediaType.APPLICATION_JSON)
+                .sessionAttrs(mapOf("user" to CustomerDto(customer)))
+        ).andExpect(status().isOk)
+            .andDo(
+                document(
+                    myIdentifier("상품목록/일반"),
+                    queryParameters(
+                        parameterWithName("page").optional().description("페이지 번호"),
+                        parameterWithName("size").optional().description("페이지당 크기"),
+                        parameterWithName("sort").optional().description("정렬 기준"),
+                        parameterWithName("from").optional().description("날짜 시작 기준"),
+                        parameterWithName("to").optional().description("날짜 종료 기준"),
+                    ),
+                    relaxedResponseFields(
+                        fieldWithPath("content[].id").type(STRING).description("상품 id"),
+                        fieldWithPath("content[].name").type(STRING).description("상품명"),
+                        fieldWithPath("content[].description").type(STRING).description("상품 설명"),
+                        fieldWithPath("content[].appointedTime").type(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("content[].appointedQuantity").type(NUMBER).description("상품 거래 수량"),
+                        fieldWithPath("last").type(BOOLEAN).description("Whether this is the last page"),
+                        fieldWithPath("totalPages").type(NUMBER).description("The total number of pages"),
+                        fieldWithPath("totalElements").type(NUMBER).description("The total number of elements"),
+                        fieldWithPath("size").type(NUMBER).description("The size of the page"),
+                        fieldWithPath("number").type(NUMBER).description("The current page number"),
+                        fieldWithPath("first").type(BOOLEAN).description("Whether this is the first page"),
+                        fieldWithPath("numberOfElements").type(NUMBER)
+                            .description("The number of elements on this page"),
+                        fieldWithPath("empty").type(BOOLEAN).description("Whether this page is empty")
+                    ),
+                )
+            )
+    }
 }

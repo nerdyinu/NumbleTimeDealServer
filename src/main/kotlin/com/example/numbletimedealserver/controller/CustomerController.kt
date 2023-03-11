@@ -6,10 +6,10 @@ import com.example.numbletimedealserver.request.LoginRequest
 import com.example.numbletimedealserver.request.SignUpRequest
 import com.example.numbletimedealserver.service.customer.CustomerService
 import com.example.numbletimedealserver.service.product.ProductService
-import javax.servlet.http.Cookie
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import javax.servlet.http.HttpSession
+import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpSession
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -28,24 +28,28 @@ class CustomerController(private val productService: ProductService, private val
     //
     @PostMapping("/signup")
     fun signUp(
-        @RequestBody signupRequest: SignUpRequest):ResponseEntity<CustomerDto>{
-        return customerService.signup(signupRequest).let{ResponseEntity.ok(it)}
-    }
+        @RequestBody signupRequest: SignUpRequest
+    ): ResponseEntity<CustomerDto> = customerService.signup(signupRequest).let { ResponseEntity.ok(it) }
+
     @PostMapping("/login")
-    fun login(@RequestBody loginRequest: LoginRequest, httpServletRequest: HttpServletRequest):ResponseEntity<CustomerDto>{
-        val loginResult=customerService.login(loginRequest)
+    fun login(
+        @RequestBody loginRequest: LoginRequest,
+        httpServletRequest: HttpServletRequest
+    ): ResponseEntity<CustomerDto> {
+        val loginResult = customerService.login(loginRequest)
         val session = httpServletRequest.getSession(true)
         session.setAttribute("user", loginResult)
         return ResponseEntity.ok(loginResult)
     }
+
     @DeleteMapping("/user")
-    fun resign(@SessionLogin loggedinUser:CustomerDto):ResponseEntity<String>{
+    fun resign(@SessionLogin loggedinUser: CustomerDto): ResponseEntity<String> {
         customerService.resign(loggedinUser.id)
         return ResponseEntity.ok().build()
     }
-    @GetMapping("/users")
-    fun listUsers(pageable: Pageable):ResponseEntity<Page<CustomerDto>>{
 
-        return customerService.getAll(pageable).let { ResponseEntity.ok(it) }
-    }
+    @GetMapping("/users")
+    fun listUsers(pageable: Pageable): ResponseEntity<Page<CustomerDto>> =
+        customerService.getAll(pageable).let { ResponseEntity.ok(it) }
+
 }

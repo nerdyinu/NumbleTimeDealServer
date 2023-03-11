@@ -1,6 +1,7 @@
 package com.example.numbletimedealserver.dto
 
 import com.example.numbletimedealserver.domain.Product
+import com.fasterxml.jackson.annotation.JsonFormat
 import java.io.Serializable
 import java.time.LocalTime
 import java.util.*

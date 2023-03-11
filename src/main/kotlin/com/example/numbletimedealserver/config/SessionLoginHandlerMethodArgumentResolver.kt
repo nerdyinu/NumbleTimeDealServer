@@ -5,7 +5,7 @@ import com.example.numblebankingserverchallenge.config.SessionLogin
 import com.example.numbletimedealserver.domain.ROLE
 import com.example.numbletimedealserver.dto.CustomerDto
 import com.example.numbletimedealserver.exception.CustomException
-import javax.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.MethodParameter
 import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest

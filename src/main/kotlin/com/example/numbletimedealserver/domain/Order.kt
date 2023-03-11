@@ -1,6 +1,6 @@
 package com.example.numbletimedealserver.domain
 
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "orders")

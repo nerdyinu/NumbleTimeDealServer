@@ -4,7 +4,7 @@ package com.example.numbletimedealserver.domain
 
 
 import com.github.f4b6a3.ulid.UlidCreator
-import javax.persistence.*
+import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -22,6 +22,7 @@ abstract class PrimaryKeyEntity(
     updatedDate: LocalDateTime = LocalDateTime.now()
 ) : Persistable<UUID> {
     @Id
+    @Column
     private val id:UUID = UlidCreator.getMonotonicUlid().toUuid()
 
     @Transient

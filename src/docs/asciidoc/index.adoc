@@ -1,0 +1,13 @@
+:doctype: book
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:toc: left
+:toclevels: 2
+:sectlinks:
+= Numble Timedeal Server Account API
+
+include::customerController.adoc[]
+
+include::productController.adoc[]

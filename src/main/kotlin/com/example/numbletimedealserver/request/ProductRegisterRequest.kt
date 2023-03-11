@@ -1,5 +1,6 @@
 package com.example.numbletimedealserver.request
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import java.io.Serializable
 import java.time.LocalTime
 

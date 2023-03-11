@@ -11,6 +11,7 @@ import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Repository
 
 
+
 class CustomerRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory):CustomerRepositoryCustom{
     override fun findByUsernameAndPassword(username: String, pw: String): Customer? {
         return jpaQueryFactory.selectFrom(customer).where(customer.name.eq(username).and(customer.password.eq(pw))).fetchOne()

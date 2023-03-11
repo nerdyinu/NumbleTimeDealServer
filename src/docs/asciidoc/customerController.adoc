@@ -1,0 +1,13 @@
+
+
+== 회원가입 [POST] /signup
+operation::customer-controller-docs/회원가입[snippets="curl-request,http-request,request-body,response-body,http-response"]
+
+== 로그인 [POST] /login
+operation::customer-controller-docs/로그인[snippets="curl-request,http-request,request-body,response-body,http-response"]
+
+== 회원 탈퇴 [DELETE] /user
+operation::customer-controller-docs/회원 탈퇴[snippets="curl-request,http-request,http-response"]
+
+== 회원 목록 [GET] /user
+operation::customer-controller-docs/회원목록[snippets="curl-request,request-parameters,response-body,http-request,http-response"]

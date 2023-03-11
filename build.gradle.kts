@@ -1,23 +1,25 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.7.6")
-    }
+//buildscript {
+//    repositories{
+//        mavenLocal()
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.7.6")
+//    }
+//}
+repositories {
+    mavenCentral()
 }
-
 plugins {
     val kotlinVersion = "1.7.22"
-    id("org.springframework.boot") version "2.7.6"
+    id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
     id("org.asciidoctor.jvm.convert") version "3.3.2"
-    kotlin("jvm") version "1.7.22"
-    kotlin("plugin.spring") version "1.7.22"
-    kotlin("plugin.jpa") version "1.7.22"
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
+    kotlin("plugin.jpa") version kotlinVersion
     kotlin("kapt") version kotlinVersion
     idea
 }
@@ -27,9 +29,6 @@ group = "com.example"
 version = "timedeal-server-1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-repositories {
-    mavenCentral()
-}
 
 extra["snippetsDir"] = file("build/generated-snippets")
 
@@ -41,12 +40,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-
+    compileOnly("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("org.mariadb.jdbc:mariadb-java-client")
     //querydsl
 
-    implementation("com.querydsl:querydsl-jpa:5.0.0")
-    kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
+    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
     //test
     runtimeOnly("com.h2database:h2")
@@ -68,16 +67,16 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 allOpen {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
     annotation("org.springframework.stereotype.Component")
 }
 
 noArg {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
     annotation("org.springframework.stereotype.Component")
 }
 tasks.bootJar{
@@ -90,4 +89,42 @@ idea {
         sourceDirs.add(kaptMain)
         generatedSourceDirs.add(kaptMain)
     }
+}
+tasks.test{
+
+    useJUnitPlatform()
+    testLogging {
+        setExceptionFormat("full")
+        setEvents(listOf("started", "skipped", "passed", "failed"))
+        showStandardStreams=true
+    }
+    outputs.dir(snippetsDir)
+
+}
+tasks.asciidoctor{
+    inputs.dir(snippetsDir)
+    dependsOn(tasks.test)
+    configurations(asciidoctorExt.name)
+    sources{include("**/index.adoc") }
+    baseDirFollowsSourceFile()
+}
+
+tasks.register<Copy>("copyDocument"){
+    doFirst{
+        delete(file("src/main/resources/static/docs"))
+    }
+    from("build/docs/asciidoc")
+    into("src/main/resources/static/docs")
+    dependsOn(tasks.asciidoctor)
+}
+tasks.build{
+    dependsOn("copyDocument")
+}
+tasks.bootJar{
+
+    dependsOn("copyDocument")
+    from("${tasks.asciidoctor.get().outputDir}") {
+        into("BOOT-INF/classes/static/docs")
+    }
+    duplicatesStrategy  = DuplicatesStrategy.EXCLUDE
 }

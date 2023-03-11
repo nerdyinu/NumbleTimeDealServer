@@ -32,7 +32,7 @@ class ProductController(private val productService: ProductService, private val 
         @PathVariable("productId") productId: UUID,
         @RequestBody productUpdateRequest: ProductUpdateRequest,
         @SessionLogin(admin = true) admin: CustomerDto
-    ): ProductDto = productService.update(productId, admin.id, productUpdateRequest)
+    ): ProductDto = productService.update(productId = productId, adminId =admin.id, productUpdateRequest)
 
 
     @DeleteMapping("/product/{productId}")

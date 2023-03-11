@@ -1,7 +1,7 @@
 package com.example.numbletimedealserver.domain
 
 import com.example.numbletimedealserver.exception.CustomException
-import javax.persistence.*
+import jakarta.persistence.*
 import java.time.LocalTime
 
 @Entity
@@ -31,6 +31,7 @@ class Product(
     @Column(nullable = false, name = "stock")
     private var _stockQuantity: Long = 100L,
 ) : PrimaryKeyEntity() {
+
     val name get() = _name
     val description get() = _description
     val stockQuantity get() = _stockQuantity
@@ -39,8 +40,8 @@ class Product(
     fun dailyUpdate() {
         this._stockQuantity = appointedQuantity
     }
-
-
+    @Version
+    private var versionNo:Long=0L
 
     fun descStock() {
         if (_stockQuantity == 0L) throw CustomException.BadRequestException()

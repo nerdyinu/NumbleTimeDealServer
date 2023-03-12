@@ -29,7 +29,7 @@ class CustomerController(private val productService: ProductService, private val
     @PostMapping("/signup")
     fun signUp(
         @RequestBody signupRequest: SignUpRequest
-    ): ResponseEntity<CustomerDto> = customerService.signup(signupRequest).let { ResponseEntity.ok(it) }
+    ): ResponseEntity<CustomerDto> = customerService.signup(signupRequest).let {ResponseEntity.ok(it) }
 
     @PostMapping("/login")
     fun login(

@@ -15,7 +15,6 @@ import java.util.UUID
 @RestController
 class OrderController(private val orderService: OrderService){
     @PostMapping("/order/{productId}")
-    fun order(@SessionLogin loginUser:CustomerDto, @PathVariable("productId") productId:UUID):ResponseEntity<OrderDto>{
-        return orderService.createOrder(loginUser.id,productId).let { ResponseEntity.ok(it) }
-    }
+    fun order(@SessionLogin loginUser:CustomerDto, @PathVariable("productId") productId:UUID):ResponseEntity<OrderDto> =orderService.createOrder(loginUser.id,productId).let { ResponseEntity.ok(it) }
+
 }

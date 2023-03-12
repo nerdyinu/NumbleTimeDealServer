@@ -1,14 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-//buildscript {
-//    repositories{
-//        mavenLocal()
-//        mavenCentral()
-//    }
-//    dependencies {
-//        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.7.6")
-//    }
-//}
+
 repositories {
     mavenCentral()
 }

@@ -1,20 +1,16 @@
 package com.example.numbletimedealserver.restdocs
 
-import com.example.numblebankingserverchallenge.config.SessionLogin
 import com.example.numbletimedealserver.*
 import com.example.numbletimedealserver.domain.Customer
+import com.example.numbletimedealserver.domain.Order
 import com.example.numbletimedealserver.domain.Product
 import com.example.numbletimedealserver.domain.ROLE
 import com.example.numbletimedealserver.dto.CustomerDto
-import com.example.numbletimedealserver.dto.ProductDto
-import com.example.numbletimedealserver.exception.CustomException
 import com.example.numbletimedealserver.repository.customer.CustomerRepository
+import com.example.numbletimedealserver.repository.order.OrderRepository
 import com.example.numbletimedealserver.repository.product.ProductRepository
 import com.example.numbletimedealserver.request.*
-import com.example.numbletimedealserver.service.product.ProductService
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -24,27 +20,17 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
 import org.springframework.restdocs.RestDocumentationExtension
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
-import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestDocumentation.*
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.MvcResult
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.util.DefaultUriBuilderFactory.EncodingMode
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -58,6 +44,7 @@ import java.util.*
 class ProductControllerDocs @Autowired constructor(
     private val customerRepository: CustomerRepository,
     private val productRepository: ProductRepository,
+    private val orderRepository: OrderRepository,
     private val mapper: ObjectMapper
 ) {
 
@@ -86,16 +73,14 @@ class ProductControllerDocs @Autowired constructor(
                 customer
             )
         )
-        val found =
-            productRepository.findById(product.id).orElse(null) ?: throw CustomException.ProductNotFoundException()
-
+        orderRepository.save(Order(customer, product))
     }
 
     @AfterEach
     fun delete() {
+        orderRepository.deleteAll()
         productRepository.deleteAll()
         customerRepository.deleteAll()
-
     }
 
     /*@PostMapping("/register")
@@ -208,19 +193,6 @@ class ProductControllerDocs @Autowired constructor(
         productService.delete(productId, admin.id)
         return ResponseEntity.ok().build()
     }*/
-    @Test
-    fun deleteUser() {
-        mockMvc.perform(
-            RestDocumentationRequestBuilders.delete("/user").contentType(MediaType.APPLICATION_JSON)
-                .sessionAttrs(mapOf("user" to CustomerDto(customer)))
-        ).andExpect(status().isOk)
-            .andDo(
-                document(
-                    myIdentifier("회원탈퇴"),
-                    requestBody(), responseBody()
-                )
-            )
-    }
 
     /*
         @GetMapping("/product/{productId}")
@@ -268,6 +240,7 @@ class ProductControllerDocs @Autowired constructor(
         */
     @Test
     fun productListAdmin() {
+
         mockMvc.perform(
             RestDocumentationRequestBuilders.get("/products/admin").accept(MediaType.APPLICATION_JSON)
                 .sessionAttrs(mapOf("user" to CustomerDto(customer)))
@@ -312,6 +285,7 @@ class ProductControllerDocs @Autowired constructor(
     }*/
     @Test
     fun productListUser() {
+
         mockMvc.perform(
             RestDocumentationRequestBuilders.get("/products/user").accept(MediaType.APPLICATION_JSON)
                 .sessionAttrs(mapOf("user" to CustomerDto(customer)))

@@ -1,6 +1,5 @@
 package com.example.numbletimedealserver.restdocs
 
-import com.example.numblebankingserverchallenge.config.SessionLogin
 import com.example.numbletimedealserver.*
 import com.example.numbletimedealserver.domain.Customer
 import com.example.numbletimedealserver.domain.ROLE
@@ -8,10 +7,7 @@ import com.example.numbletimedealserver.dto.CustomerDto
 import com.example.numbletimedealserver.repository.customer.CustomerRepository
 import com.example.numbletimedealserver.request.LoginRequest
 import com.example.numbletimedealserver.request.SignUpRequest
-import com.example.numbletimedealserver.service.customer.CustomerService
-import com.example.numbletimedealserver.service.product.ProductService
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,37 +17,20 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
-import org.springframework.messaging.handler.annotation.Payload
-import org.springframework.restdocs.RestDocumentationContext
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.web.client.RequestMatcher
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import jakarta.servlet.http.HttpServletRequest
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler.*
-import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
-import org.springframework.restdocs.request.RequestDocumentation.queryParameters
-
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureRestDocs(outputDir = "build/generated-snippets")
@@ -59,7 +38,7 @@ import org.springframework.util.MultiValueMap
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension::class, RestDocumentationExtension::class)
-@Transactional
+//@Transactional
 class CustomerControllerDocs @Autowired constructor(
     private val customerRepository: CustomerRepository,
     private val mapper:ObjectMapper
@@ -70,7 +49,7 @@ class CustomerControllerDocs @Autowired constructor(
     val signUpRequest = SignUpRequest("inu", "test", ROLE.ADMIN)
     lateinit var customer: Customer
     val loginRequest = LoginRequest(signUpRequest.name, signUpRequest.pw)
-
+    fun myIdentifier(methodName: String) = "{class-name}/$methodName"
     @BeforeEach
     fun setup() {
         customer = customerRepository.save(Customer(signUpRequest.name, signUpRequest.pw, signUpRequest.role))
@@ -186,7 +165,7 @@ class CustomerControllerDocs @Autowired constructor(
             .andDo(
                 document(
                     myIdentifier("회원목록"),
-                    queryParameters(
+                    RequestDocumentation.queryParameters(
                         parameterWithName("page").optional().description("The page number to retrieve (default: 0)"),
                         parameterWithName("size").optional().description("The size of list for each page"),
                         parameterWithName("sort").optional().description("sort criteria(default:ASC)")
@@ -211,5 +190,5 @@ class CustomerControllerDocs @Autowired constructor(
 
     }
 
-    fun myIdentifier(methodName: String) = "{class-name}/$methodName"
+
 }

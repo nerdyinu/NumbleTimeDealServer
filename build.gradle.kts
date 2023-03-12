@@ -41,8 +41,8 @@ dependencies {
     kapt("org.springframework.boot:spring-boot-configuration-processor")
     //test
     runtimeOnly("com.h2database:h2")
-    testImplementation ("io.mockk:mockk-jvm:1.13.3")
-    testImplementation("com.ninja-squad:springmockk:4.0.0")
+    testImplementation("io.mockk:mockk:1.13.4")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test"){exclude(module="mockito-core")}
     testImplementation("org.springframework.batch:spring-batch-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")

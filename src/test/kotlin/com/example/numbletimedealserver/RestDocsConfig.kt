@@ -13,8 +13,6 @@ class RestDocsConfig {
             it.operationPreprocessors()
                 .withRequestDefaults(Preprocessors.prettyPrint())
                 .withResponseDefaults(Preprocessors.prettyPrint())
-
-
         }
     }
 

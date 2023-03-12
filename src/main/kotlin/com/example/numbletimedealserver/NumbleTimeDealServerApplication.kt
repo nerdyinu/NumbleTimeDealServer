@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.web.filter.HiddenHttpMethodFilter
 
 @SpringBootApplication
-
 class NumbleTimeDealServerApplication{
 
 }

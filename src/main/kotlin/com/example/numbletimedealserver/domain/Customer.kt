@@ -20,7 +20,7 @@ class Customer (
     private val _orders:MutableList<Order> = mutableListOf(),
 
 ):PrimaryKeyEntity(){
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     var name:String = name
         protected set
     val orders:List<Order> get() = _orders

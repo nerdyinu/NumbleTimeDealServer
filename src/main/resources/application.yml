@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:mariadb://db:3306/timedeal
+    url: jdbc:mariadb://192.168.0.13:3306/timedeal
     username: root
     password: 32518458
     driver-class-name: org.mariadb.jdbc.Driver
@@ -23,4 +23,5 @@ logging:
     #    org.hibernate.sql: debug
     org.hibernate.sql: info
     org.hibernate.jdbc.bind: trace
-
+server:
+  port: 9000

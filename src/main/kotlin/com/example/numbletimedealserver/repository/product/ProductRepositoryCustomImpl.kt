@@ -35,9 +35,8 @@ class ProductRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) 
 
 
     override fun findByIdLockOption(@Param("productId") productId: UUID, isLock: Boolean): Product? {
-        jpaQueryFactory.selectFrom(product).fetch().forEach{println("printAll::${it.id}")}
         val query = jpaQueryFactory.selectFrom(product).where(product.id.eq(productId))
         if(isLock)query.setLockMode(LockModeType.PESSIMISTIC_WRITE)
-        query.fetchOne().let { println("query found product!:::${it?.id}"); return it }
+        return query.fetchOne()
     }
 }

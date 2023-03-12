@@ -16,7 +16,6 @@ class WebConfiguration {
     @Bean
     fun jpaQueryFactory(): JPAQueryFactory = JPAQueryFactory(em)
 
-    @Bean
-    fun hiddenHttpMethodFilter(): HiddenHttpMethodFilter = HiddenHttpMethodFilter()
+
 
 }

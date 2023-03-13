@@ -56,10 +56,6 @@ class ProductControllerUnitTest @Autowired constructor(val mapper: ObjectMapper)
         @SessionLogin(admin = true) admin: CustomerDto
     ): ProductDto = productService.register(admin.id, productRegisterRequest)
     */
-    @BeforeEach
-    fun setup() {
-
-    }
 
     @Test
     fun `상품등록 성공`() {

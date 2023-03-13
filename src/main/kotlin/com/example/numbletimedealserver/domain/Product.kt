@@ -22,7 +22,6 @@ class Product(
     private var _description: String,
 
     @Column(nullable = false, name = "appointed_time")
-    @JsonSerialize(using = LocalTimeSerializer::class)
     private var _appointedTime: LocalTime,
 
     @Column(nullable = false, name = "appointed_quantity")

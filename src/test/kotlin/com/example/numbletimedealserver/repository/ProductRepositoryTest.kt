@@ -80,16 +80,25 @@ class ProductRepositoryTest @Autowired constructor(
     fun `testfindAllByAppointedTimeBetween`(){
         val admin =Customer("inu", "12345", ROLE.ADMIN)
         em.persist(admin)
-        val product1 = Product("book1", "empty", LocalTime.now(),100L,admin)
-        val product2 = Product("book2", "empty2", LocalTime.now(),100L,admin)
-        val product3 = Product("book3", "empty3", LocalTime.now().minusHours(2L),100L,admin)
+        val now = LocalTime.now().withNano(0)
+        val onehourbefore = now.minusHours(1L)
+        val twohourbefore = now.minusHours(2L)
+        val product1 = Product("book1", "empty", now,100L,admin)
+        val product2 = Product("book2", "empty2", now,100L,admin)
+        val product3 = Product("book3", "empty3", twohourbefore,100L,admin)
         em.persist(product1)
         em.persist(product2)
         em.persist(product3)
         em.flush()
-        val res=productRepository.findAllByAppointedTimeBetween(LocalTime.now().minusHours(1L), LocalTime.now())
+        em.clear()
+        val res=productRepository.findAllByAppointedTimeBetween(LocalTime.now(), onehourbefore)
+        res.forEach{println("res1::${it.toString()}")}
         assertThat(res).containsExactly(product1,product2)
-        val res2 = productRepository.findAllByAppointedTimeBetween(LocalTime.now().minusHours(3L), LocalTime.now().minusHours(1L))
+
+
+        val res2 = productRepository.findAllByAppointedTimeBetween(twohourbefore.minusHours(1L), onehourbefore)
+//        res2.forEach(::println)
+        res2.forEach{println("res2::${it.toString()}")}
         assertThat(res2).containsExactly(product3)
     }
 }

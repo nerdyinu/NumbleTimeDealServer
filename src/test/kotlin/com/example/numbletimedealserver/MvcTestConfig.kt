@@ -13,18 +13,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @TestConfiguration
 class MvcTestConfig :WebMvcConfigurer{
-    @Bean
-    fun hiddenHttpMethodFilter(): HiddenHttpMethodFilter = HiddenHttpMethodFilter()
-    override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
-        resolvers.add(loggedInMemberResolver())
 
-    }
-    @Bean
-    fun loggedInMemberResolver(): HandlerMethodArgumentResolver = SessionLoginHandlerMethodArgumentResolver()
     @Bean
     fun objectMapper(): ObjectMapper = CustomObjectMapper()
 
-    override fun configureMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
-        converters.add(MappingJackson2HttpMessageConverter(objectMapper()))
-    }
+
 }

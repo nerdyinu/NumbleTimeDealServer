@@ -9,6 +9,9 @@ import com.example.numbletimedealserver.request.ProductRegisterRequest
 import com.example.numbletimedealserver.request.ProductUpdateRequest
 import com.example.numbletimedealserver.service.customer.CustomerService
 import com.example.numbletimedealserver.service.product.ProductService
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
@@ -16,13 +19,19 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-class ProductController(private val productService: ProductService, private val customerService: CustomerService) {
+class ProductController(private val mapper:ObjectMapper,private val productService: ProductService, private val customerService: CustomerService) {
     //상품 : 삭제/목록/상세 기능
+    val logger= LoggerFactory.getLogger(ProductController::class.java)
     @PostMapping("/register")
     fun register(
         @RequestBody productRegisterRequest: ProductRegisterRequest,
         @SessionLogin(admin = true) admin: CustomerDto
-    ): ProductDto = productService.register(admin.id, productRegisterRequest)
+    ): ProductDto {
+        logger.info("Received request with time: ${productRegisterRequest.appointedTime}")
+        val ret= productService.register(admin.id, productRegisterRequest)
+        logger.info("deserialized response with time: ${ret.appointedTime}")
+        return ret
+    }
 
 
     @PutMapping("/product/{productId}")

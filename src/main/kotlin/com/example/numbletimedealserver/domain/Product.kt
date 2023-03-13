@@ -1,7 +1,10 @@
 package com.example.numbletimedealserver.domain
 
 import com.example.numbletimedealserver.exception.CustomException
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer
 import jakarta.persistence.*
+import java.io.Serializable
 import java.time.LocalTime
 
 @Entity
@@ -19,6 +22,7 @@ class Product(
     private var _description: String,
 
     @Column(nullable = false, name = "appointed_time")
+    @JsonSerialize(using = LocalTimeSerializer::class)
     private var _appointedTime: LocalTime,
 
     @Column(nullable = false, name = "appointed_quantity")

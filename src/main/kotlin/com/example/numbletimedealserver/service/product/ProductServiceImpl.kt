@@ -29,11 +29,8 @@ class ProductServiceImpl(
 
     @Transactional
     override fun update(productId: UUID, adminId: UUID, productUpdateRequest: ProductUpdateRequest): ProductDto {
-        println("incoming productId:: $productId")
         val product =
             productRepository.findByIdLockOption(productId,true)?: throw CustomException.ProductNotFoundException()
-
-        println("product found::${product.id}, admin::${product.admin.id}")
         productUpdateRequest.also { (name, desc, time, quantity) ->
             product.update(
                 time = time,

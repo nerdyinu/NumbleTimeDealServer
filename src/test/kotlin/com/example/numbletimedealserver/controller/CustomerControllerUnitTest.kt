@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.junit5.MockKExtension
+import io.mockk.verify
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -65,6 +66,7 @@ class CustomerControllerUnitTest @Autowired constructor(val mapper:ObjectMapper)
             jsonPath("$.name") { value(signUpRequest.name) }
             jsonPath("$.role") { value(signUpRequest.role.toString()) }
         }
+        verify(exactly = 1) { customerService.signup(signUpRequest) }
     }
 
     /*
@@ -94,6 +96,7 @@ class CustomerControllerUnitTest @Autowired constructor(val mapper:ObjectMapper)
             jsonPath("$.name") { value(signUpRequest.name) }
             jsonPath("$.role") { value(signUpRequest.role.toString()) }
         }.andReturn()
+        verify(exactly = 1) { customerService.login(loginRequest) }
         val session = result.request.session
         assertThat(session?.getAttribute("user")).isNotNull
         assertThat(session?.getAttribute("user")).isEqualTo(returnDto)
@@ -115,6 +118,7 @@ class CustomerControllerUnitTest @Autowired constructor(val mapper:ObjectMapper)
         }.andExpect {
             status { isOk() }
         }
+        verify(exactly = 1) { customerService.resign(id) }
     }
     /*
     @GetMapping("/users")
@@ -137,5 +141,6 @@ class CustomerControllerUnitTest @Autowired constructor(val mapper:ObjectMapper)
             jsonPath("$.content[0].role"){value(list[0].role.toString())}
             jsonPath("$.content[0].name"){value(list[0].name)}
         }
+        verify(exactly = 1) { customerService.getAll(request) }
     }
 }

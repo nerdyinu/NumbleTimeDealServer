@@ -90,15 +90,12 @@ class ProductRepositoryTest @Autowired constructor(
         em.persist(product2)
         em.persist(product3)
         em.flush()
-        em.clear()
-        val res=productRepository.findAllByAppointedTimeBetween(LocalTime.now(), onehourbefore)
-        res.forEach{println("res1::${it.toString()}")}
+
+        val res=productRepository.findAllByAppointedTimeBetween(onehourbefore, LocalTime.now())
         assertThat(res).containsExactly(product1,product2)
 
 
-        val res2 = productRepository.findAllByAppointedTimeBetween(twohourbefore.minusHours(1L), onehourbefore)
-//        res2.forEach(::println)
-        res2.forEach{println("res2::${it.toString()}")}
+        val res2 = productRepository.findAllByAppointedTimeBetween(LocalTime.now().minusHours(3L), twohourbefore)
         assertThat(res2).containsExactly(product3)
     }
 }

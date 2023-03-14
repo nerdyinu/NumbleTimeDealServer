@@ -24,6 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.time.LocalTime
 import java.util.*
+import javax.swing.text.html.Option
 
 @ExtendWith(SpringExtension::class, MockKExtension::class)
 class OrderServiceUnitTest {
@@ -57,12 +58,12 @@ class OrderServiceUnitTest {
         val origin = product.stockQuantity
         val order = Order(admin,product)
         mockkConstructor(Order::class)
-        every { productRepository.findByIdLockOption(product.id,true) } returns product
+        every { productRepository.findById(product.id) } returns Optional.of(product)
         every { customerRepository.findById(admin.id) } returns Optional.of(admin)
         every { orderRepository.save(any()) } returns order
         assertThat(orderService.createOrder(admin.id,product.id)).isEqualTo(OrderDto(order))
         assertThat(product.stockQuantity).isEqualTo(origin-1L)
-        verify(exactly = 1) { productRepository.findByIdLockOption(product.id, true) }
+        verify(exactly = 1) { productRepository.findById(product.id)  }
         verify(exactly = 1) { customerRepository.findById(admin.id) }
         verify(exactly = 1) { orderRepository.save(any()) }
     }
@@ -70,12 +71,12 @@ class OrderServiceUnitTest {
     fun `createorder returns 404 when product id not found`(){
         val origin = product.stockQuantity
         val order = Order(admin,product)
-        every { productRepository.findByIdLockOption(product.id,true) } returns null
+        every { productRepository.findById(product.id) } returns Optional.empty()
         every { customerRepository.findById(admin.id) } returns Optional.of(admin)
         every { orderRepository.save(any()) } returns order
         assertThrows<CustomException.ProductNotFoundException>{orderService.createOrder(admin.id,product.id)}
 
-        verify(exactly = 1) { productRepository.findByIdLockOption(product.id, true) }
+        verify(exactly = 1) { productRepository.findById(product.id) }
         verify(exactly = 0) { customerRepository.findById(admin.id) }
         verify(exactly = 0) { orderRepository.save(any()) }
     }
@@ -83,12 +84,12 @@ class OrderServiceUnitTest {
     fun `createOrder throws 404 when customer id not found`(){
         val origin = product.stockQuantity
         val order = Order(admin,product)
-        every { productRepository.findByIdLockOption(product.id,true) } returns product
+        every { productRepository.findById(product.id) } returns Optional.of(product)
         every { customerRepository.findById(admin.id) } returns Optional.empty()
         every { orderRepository.save(any()) } returns order
         assertThrows<CustomException.UserNotFoundException>{orderService.createOrder(admin.id,product.id)}
 
-        verify(exactly = 1) { productRepository.findByIdLockOption(product.id, true) }
+        verify(exactly = 1) { productRepository.findById(product.id) }
         verify(exactly = 1) { customerRepository.findById(admin.id) }
         verify(exactly = 0) { orderRepository.save(any()) }
     }

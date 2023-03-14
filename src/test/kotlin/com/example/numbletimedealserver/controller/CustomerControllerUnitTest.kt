@@ -1,5 +1,6 @@
 package com.example.numbletimedealserver.controller
 
+
 import com.example.numbletimedealserver.domain.ROLE
 import com.example.numbletimedealserver.dto.CustomerDto
 import com.example.numbletimedealserver.request.LoginRequest
@@ -11,26 +12,19 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
-
-
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.support.PageableExecutionUtils
-import org.springframework.http.MediaType
 import org.springframework.http.MediaType.*
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
-import org.springframework.util.LinkedMultiValueMap
 import java.util.*
 
 @ExtendWith(SpringExtension::class, MockKExtension::class)

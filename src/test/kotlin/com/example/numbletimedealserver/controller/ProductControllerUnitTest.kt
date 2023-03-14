@@ -1,14 +1,11 @@
 package com.example.numbletimedealserver.controller
 
-import com.example.numblebankingserverchallenge.config.SessionLogin
-import com.example.numbletimedealserver.domain.Product
 import com.example.numbletimedealserver.domain.ROLE
 import com.example.numbletimedealserver.dto.CustomerDto
 import com.example.numbletimedealserver.dto.ProductDto
 import com.example.numbletimedealserver.request.ProductListCondition
 import com.example.numbletimedealserver.request.ProductRegisterRequest
 import com.example.numbletimedealserver.request.ProductUpdateRequest
-import com.example.numbletimedealserver.request.SignUpRequest
 import com.example.numbletimedealserver.service.customer.CustomerService
 import com.example.numbletimedealserver.service.product.ProductService
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -16,20 +13,15 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.*
-import org.springframework.test.web.servlet.delete
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 import java.time.LocalTime

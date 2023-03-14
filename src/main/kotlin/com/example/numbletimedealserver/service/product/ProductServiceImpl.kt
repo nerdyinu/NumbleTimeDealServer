@@ -43,14 +43,7 @@ class ProductServiceImpl(
         return ProductDto(product)
     }
 
-    @Transactional
-    override fun dailyUpdate(productId: UUID): ProductDto =
-        productRepository.findById(productId).orElse(null)?.also { it.dailyUpdate() }?.let(::ProductDto)
-            ?: throw CustomException.ProductNotFoundException()
 
-
-    override fun findAllByAppointedTime(start: LocalTime, end: LocalTime): List<ProductDto> =
-        productRepository.findAllByAppointedTimeBetween(start, end).map(::ProductDto)
 
 
     override fun register(adminId: UUID, productRegisterRequest: ProductRegisterRequest): ProductDto {

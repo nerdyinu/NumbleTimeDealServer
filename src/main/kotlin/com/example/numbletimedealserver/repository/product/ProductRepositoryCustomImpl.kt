@@ -4,6 +4,7 @@ import com.example.numbletimedealserver.domain.Product
 import com.example.numbletimedealserver.domain.QProduct
 import com.example.numbletimedealserver.domain.QProduct.*
 import com.example.numbletimedealserver.exception.CustomException
+import com.querydsl.core.types.dsl.BooleanExpression
 
 import com.querydsl.jpa.impl.JPAQuery
 import com.querydsl.jpa.impl.JPAQueryFactory
@@ -20,9 +21,10 @@ import java.util.*
 
 class ProductRepositoryCustomImpl(private val jpaQueryFactory: JPAQueryFactory) : ProductRepositoryCustom {
 
-    override fun findAllByAppointedTimeBetween(start: LocalTime, end: LocalTime): List<Product> =
-        jpaQueryFactory.selectFrom(product).where(product._appointedTime.between(start, end)).fetch()
-
+    override fun findAllByAppointedTimeBetween(start: LocalTime, end: LocalTime): List<Product> {
+        val exp: BooleanExpression =if(start.isBefore(end)) product._appointedTime.between(start,end) else product._appointedTime.after(end).not().or(product._appointedTime.before(start).not())
+        return jpaQueryFactory.selectFrom(product).where(exp).fetch()
+    }
 
     override fun findAllByAdminId(adminId: UUID): List<Product> =
         jpaQueryFactory.selectFrom(product).where(product.admin.id.eq(adminId)).fetch()

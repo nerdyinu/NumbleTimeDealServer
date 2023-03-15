@@ -173,13 +173,11 @@ class CustomerControllerDocs @Autowired constructor(
                         fieldWithPath("content[].id").type(STRING).description("회원 id"),
                         fieldWithPath("content[].name").type(STRING).description("회원 이름"),
                         fieldWithPath("content[].role").type(STRING).description("회원 권한"),
-
                         fieldWithPath("last").type(BOOLEAN).description("Whether this is the last page"),
                         fieldWithPath("totalPages").type(NUMBER).description("The total number of pages"),
                         fieldWithPath("totalElements").type(NUMBER).description("The total number of elements"),
                         fieldWithPath("size").type(NUMBER).description("The size of the page"),
                         fieldWithPath("number").type(NUMBER).description("The current page number"),
-
                         fieldWithPath("first").type(BOOLEAN).description("Whether this is the first page"),
                         fieldWithPath("numberOfElements").type(NUMBER).description("The number of elements on this page"),
                         fieldWithPath("empty").type(BOOLEAN).description("Whether this page is empty")

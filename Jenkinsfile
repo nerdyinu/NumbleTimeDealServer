@@ -35,8 +35,6 @@ pipeline {
         sh './gradlew bootJar'
       }
     }
-
-
     stage('Build Docker Image') {
       steps {
         script {

@@ -47,7 +47,6 @@ pipeline {
         }
       }
     }
-
     stage('Deploy Docker Container') {
       steps {
         script {

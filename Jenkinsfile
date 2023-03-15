@@ -2,23 +2,19 @@ pipeline {
   agent any
   environment {
       NGRINDER_CONTROLLER_URL = 'http://192.168.0.13:8080'
+      GIT_SSH_COMMAND = 'ssh -i /var/jenkins_home/.ssh/id_rsa -o StrictHostKeyChecking=no'
   }
 
   stages {
-    stage('Checkout') {
-      steps {
-        sshagent(['git']) {
-          checkout([
-            $class: 'GitSCM',
-            branches: [[name: '*/deploy']],
-            userRemoteConfigs: [[
-              url: 'git@github.com:inudev5/NumbleTimeDealServer.git',
-              credentialsId: 'github-credentials'
-            ]]
-          ])
-        }
-      }
-    }
+   stage('Checkout') {
+     steps {
+       git(
+         url: 'git@github.com:inudev5/NumbleTimeDealServer.git',
+         branch: 'deploy',
+         credentialsId: 'github-credentials'
+       )
+     }
+     }
     // Other stages here
       stage('Build') {
         steps {

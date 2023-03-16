@@ -24,6 +24,7 @@ import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
+
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -118,17 +119,17 @@ class ProductControllerDocs @Autowired constructor(
                 document(
                     myIdentifier("상품등록"),
                     requestFields(
-                        fieldWithPath("name").type(STRING).description("상품명"),
-                        fieldWithPath("description").type(STRING).description("상품 설명"),
-                        fieldWithPath("appointedTime").type(DATETIME).description("상품 거래 시간"),
-                        fieldWithPath("appointedQuantity").type(NUMBER).description("상품 거래 수량")
+                        fieldWithPath("name").TYPE(STRING).description("상품명"),
+                        fieldWithPath("description").TYPE(STRING).description("상품 설명"),
+                        fieldWithPath("appointedTime").TYPE(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("appointedQuantity").TYPE(NUMBER).description("상품 거래 수량")
                     ),
                     responseFields(
-                        fieldWithPath("id").type(STRING).description("상품 id"),
-                        fieldWithPath("name").type(STRING).description("상품명"),
-                        fieldWithPath("description").type(STRING).description("상품 설명"),
-                        fieldWithPath("appointedTime").type(DATETIME).description("상품 거래 시간"),
-                        fieldWithPath("appointedQuantity").type(NUMBER).description("상품 거래 수량")
+                        fieldWithPath("id").TYPE(STRING).description("상품 id"),
+                        fieldWithPath("name").TYPE(STRING).description("상품명"),
+                        fieldWithPath("description").TYPE(STRING).description("상품 설명"),
+                        fieldWithPath("appointedTime").TYPE(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("appointedQuantity").TYPE(NUMBER).description("상품 거래 수량")
 
                     )
                 )
@@ -168,17 +169,17 @@ class ProductControllerDocs @Autowired constructor(
                     myIdentifier("상품수정"),
                     pathParameters(parameterWithName("productId").description("상품 id")),
                     requestFields(
-                        fieldWithPath("name").optional().type(STRING).description("상품명"),
-                        fieldWithPath("description").optional().type(STRING).description("상품 설명"),
-                        fieldWithPath("appointedTime").optional().type(DATETIME).description("상품 거래 시간"),
-                        fieldWithPath("appointedQuantity").optional().type(NUMBER).description("상품 거래 수량")
+                        fieldWithPath("name").optional().TYPE(STRING).description("상품명"),
+                        fieldWithPath("description").optional().TYPE(STRING).description("상품 설명"),
+                        fieldWithPath("appointedTime").optional().TYPE(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("appointedQuantity").optional().TYPE(NUMBER).description("상품 거래 수량")
                     ),
                     responseFields(
-                        fieldWithPath("id").type(STRING).description("상품 id"),
-                        fieldWithPath("name").type(STRING).description("상품명"),
-                        fieldWithPath("description").type(STRING).description("상품 설명"),
-                        fieldWithPath("appointedTime").type(DATETIME).description("상품 거래 시간"),
-                        fieldWithPath("appointedQuantity").type(NUMBER).description("상품 거래 수량")
+                        fieldWithPath("id").TYPE(STRING).description("상품 id"),
+                        fieldWithPath("name").TYPE(STRING).description("상품명"),
+                        fieldWithPath("description").TYPE(STRING).description("상품 설명"),
+                        fieldWithPath("appointedTime").TYPE(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("appointedQuantity").TYPE(NUMBER).description("상품 거래 수량")
                     )
                 )
             )
@@ -220,11 +221,11 @@ class ProductControllerDocs @Autowired constructor(
                     myIdentifier("상품상세"),
                     pathParameters(parameterWithName("productId").description("상품 id")),
                     responseFields(
-                        fieldWithPath("id").type(STRING).description("상품 id"),
-                        fieldWithPath("name").type(STRING).description("상품명"),
-                        fieldWithPath("description").type(STRING).description("상품 설명"),
-                        fieldWithPath("appointedTime").type(DATETIME).description("상품 거래 시간"),
-                        fieldWithPath("appointedQuantity").type(NUMBER).description("상품 거래 수량")
+                        fieldWithPath("id").TYPE(STRING).description("상품 id"),
+                        fieldWithPath("name").TYPE(STRING).description("상품명"),
+                        fieldWithPath("description").TYPE(STRING).description("상품 설명"),
+                        fieldWithPath("appointedTime").TYPE(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("appointedQuantity").TYPE(NUMBER).description("상품 거래 수량")
                     )
                 )
             )
@@ -254,20 +255,20 @@ class ProductControllerDocs @Autowired constructor(
                         parameterWithName("sort").optional().description("정렬 기준")
                     ),
                     relaxedResponseFields(
-                        fieldWithPath("content[].id").type(STRING).description("상품 id"),
-                        fieldWithPath("content[].name").type(STRING).description("상품명"),
-                        fieldWithPath("content[].description").type(STRING).description("상품 설명"),
-                        fieldWithPath("content[].appointedTime").type(DATETIME).description("상품 거래 시간"),
-                        fieldWithPath("content[].appointedQuantity").type(NUMBER).description("상품 거래 수량"),
-                        fieldWithPath("last").type(BOOLEAN).description("Whether this is the last page"),
-                        fieldWithPath("totalPages").type(NUMBER).description("The total number of pages"),
-                        fieldWithPath("totalElements").type(NUMBER).description("The total number of elements"),
-                        fieldWithPath("size").type(NUMBER).description("The size of the page"),
-                        fieldWithPath("number").type(NUMBER).description("The current page number"),
-                        fieldWithPath("first").type(BOOLEAN).description("Whether this is the first page"),
-                        fieldWithPath("numberOfElements").type(NUMBER)
+                        fieldWithPath("content[].id").TYPE(STRING).description("상품 id"),
+                        fieldWithPath("content[].name").TYPE(STRING).description("상품명"),
+                        fieldWithPath("content[].description").TYPE(STRING).description("상품 설명"),
+                        fieldWithPath("content[].appointedTime").TYPE(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("content[].appointedQuantity").TYPE(NUMBER).description("상품 거래 수량"),
+                        fieldWithPath("last").TYPE(BOOLEAN).description("Whether this is the last page"),
+                        fieldWithPath("totalPages").TYPE(NUMBER).description("The total number of pages"),
+                        fieldWithPath("totalElements").TYPE(NUMBER).description("The total number of elements"),
+                        fieldWithPath("size").TYPE(NUMBER).description("The size of the page"),
+                        fieldWithPath("number").TYPE(NUMBER).description("The current page number"),
+                        fieldWithPath("first").TYPE(BOOLEAN).description("Whether this is the first page"),
+                        fieldWithPath("numberOfElements").TYPE(NUMBER)
                             .description("The number of elements on this page"),
-                        fieldWithPath("empty").type(BOOLEAN).description("Whether this page is empty")
+                        fieldWithPath("empty").TYPE(BOOLEAN).description("Whether this page is empty")
                     ),
                 )
             )
@@ -301,20 +302,20 @@ class ProductControllerDocs @Autowired constructor(
                         parameterWithName("to").optional().description("날짜 종료 기준"),
                     ),
                     relaxedResponseFields(
-                        fieldWithPath("content[].id").type(STRING).description("상품 id"),
-                        fieldWithPath("content[].name").type(STRING).description("상품명"),
-                        fieldWithPath("content[].description").type(STRING).description("상품 설명"),
-                        fieldWithPath("content[].appointedTime").type(DATETIME).description("상품 거래 시간"),
-                        fieldWithPath("content[].appointedQuantity").type(NUMBER).description("상품 거래 수량"),
-                        fieldWithPath("last").type(BOOLEAN).description("Whether this is the last page"),
-                        fieldWithPath("totalPages").type(NUMBER).description("The total number of pages"),
-                        fieldWithPath("totalElements").type(NUMBER).description("The total number of elements"),
-                        fieldWithPath("size").type(NUMBER).description("The size of the page"),
-                        fieldWithPath("number").type(NUMBER).description("The current page number"),
-                        fieldWithPath("first").type(BOOLEAN).description("Whether this is the first page"),
-                        fieldWithPath("numberOfElements").type(NUMBER)
+                        fieldWithPath("content[].id").TYPE(STRING).description("상품 id"),
+                        fieldWithPath("content[].name").TYPE(STRING).description("상품명"),
+                        fieldWithPath("content[].description").TYPE(STRING).description("상품 설명"),
+                        fieldWithPath("content[].appointedTime").TYPE(DATETIME).description("상품 거래 시간"),
+                        fieldWithPath("content[].appointedQuantity").TYPE(NUMBER).description("상품 거래 수량"),
+                        fieldWithPath("last").TYPE(BOOLEAN).description("Whether this is the last page"),
+                        fieldWithPath("totalPages").TYPE(NUMBER).description("The total number of pages"),
+                        fieldWithPath("totalElements").TYPE(NUMBER).description("The total number of elements"),
+                        fieldWithPath("size").TYPE(NUMBER).description("The size of the page"),
+                        fieldWithPath("number").TYPE(NUMBER).description("The current page number"),
+                        fieldWithPath("first").TYPE(BOOLEAN).description("Whether this is the first page"),
+                        fieldWithPath("numberOfElements").TYPE(NUMBER)
                             .description("The number of elements on this page"),
-                        fieldWithPath("empty").type(BOOLEAN).description("Whether this page is empty")
+                        fieldWithPath("empty").TYPE(BOOLEAN).description("Whether this page is empty")
                     ),
                 )
             )

@@ -1,5 +1,10 @@
 package com.example.numbletimedealserver.restdocs
 
+import com.example.numbletimedealserver.DocsFieldType
+import org.springframework.restdocs.payload.FieldDescriptor
+
+
+
 
 import com.example.numbletimedealserver.*
 import com.example.numbletimedealserver.domain.Customer
@@ -38,7 +43,7 @@ import org.springframework.util.LinkedMultiValueMap
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension::class, RestDocumentationExtension::class)
 @Transactional
-class CustomerControllerDocs @Autowired constructor(
+class 록CustomerControllerDocs @Autowired constructor(
     private val mapper:ObjectMapper,
     private val customerRepository: CustomerRepository,
 ) {
@@ -75,14 +80,14 @@ class CustomerControllerDocs @Autowired constructor(
                 document(
                     myIdentifier("회원가입"),
                     requestFields(
-                        fieldWithPath("name").type(STRING).description("회원 이름"),
-                        fieldWithPath("pw").type(STRING).description("회원 비밀번호"),
-                        fieldWithPath("role").type(ENUM<ROLE>(ROLE::class)).description("회원 권한")
+                        fieldWithPath("name").TYPE(STRING).description("회원 이름"),
+                        fieldWithPath("pw").TYPE(STRING).description("회원 비밀번호"),
+                        fieldWithPath("role").TYPE(ENUM<ROLE>(ROLE::class)).description("회원 권한")
                     ),
                     responseFields(
-                        fieldWithPath("id").type(STRING).description("회원 id"),
-                        fieldWithPath("name").type(STRING).description("회원 이름"),
-                        fieldWithPath("role").type(STRING).description("회원 권한")
+                        fieldWithPath("id").TYPE(STRING).description("회원 id"),
+                        fieldWithPath("name").TYPE(STRING).description("회원 이름"),
+                        fieldWithPath("role").TYPE(STRING).description("회원 권한")
                     )
                 )
             )
@@ -115,13 +120,13 @@ class CustomerControllerDocs @Autowired constructor(
                 document(
                     myIdentifier("로그인"),
                     requestFields(
-                        fieldWithPath("username").type(STRING).description("회원 이름"),
-                        fieldWithPath("pw").type(STRING).description("회원 비밀번호")
+                        fieldWithPath("username").TYPE(STRING).description("회원 이름"),
+                        fieldWithPath("pw").TYPE(STRING).description("회원 비밀번호")
                     ),
                     responseFields(
-                        fieldWithPath("id").type(STRING).description("회원 id"),
-                        fieldWithPath("name").type(STRING).description("회원 이름"),
-                        fieldWithPath("role").type(STRING).description("회원 권한")
+                        fieldWithPath("id").TYPE(STRING).description("회원 id"),
+                        fieldWithPath("name").TYPE(STRING).description("회원 이름"),
+                        fieldWithPath("role").TYPE(STRING).description("회원 권한")
                     )
                 )
             )
@@ -170,17 +175,17 @@ class CustomerControllerDocs @Autowired constructor(
                         parameterWithName("sort").optional().description("sort criteria(default:ASC)")
                     ),
                     relaxedResponseFields(
-                        fieldWithPath("content[].id").type(STRING).description("회원 id"),
-                        fieldWithPath("content[].name").type(STRING).description("회원 이름"),
-                        fieldWithPath("content[].role").type(STRING).description("회원 권한"),
-                        fieldWithPath("last").type(BOOLEAN).description("Whether this is the last page"),
-                        fieldWithPath("totalPages").type(NUMBER).description("The total number of pages"),
-                        fieldWithPath("totalElements").type(NUMBER).description("The total number of elements"),
-                        fieldWithPath("size").type(NUMBER).description("The size of the page"),
-                        fieldWithPath("number").type(NUMBER).description("The current page number"),
-                        fieldWithPath("first").type(BOOLEAN).description("Whether this is the first page"),
-                        fieldWithPath("numberOfElements").type(NUMBER).description("The number of elements on this page"),
-                        fieldWithPath("empty").type(BOOLEAN).description("Whether this page is empty")
+                        fieldWithPath("content[].id").TYPE(STRING).description("회원 id"),
+                        fieldWithPath("content[].name").TYPE(STRING).description("회원 이름"),
+                        fieldWithPath("content[].role").TYPE(STRING).description("회원 권한"),
+                        fieldWithPath("last").TYPE(BOOLEAN).description("Whether this is the last page"),
+                        fieldWithPath("totalPages").TYPE(NUMBER).description("The total number of pages"),
+                        fieldWithPath("totalElements").TYPE(NUMBER).description("The total number of elements"),
+                        fieldWithPath("size").TYPE(NUMBER).description("The size of the page"),
+                        fieldWithPath("number").TYPE(NUMBER).description("The current page number"),
+                        fieldWithPath("first").TYPE(BOOLEAN).description("Whether this is the first page"),
+                        fieldWithPath("numberOfElements").TYPE(NUMBER).description("The number of elements on this page"),
+                        fieldWithPath("empty").TYPE(BOOLEAN).description("Whether this page is empty")
                     ),
                 )
             ).andReturn()

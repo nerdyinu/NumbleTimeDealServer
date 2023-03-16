@@ -11,3 +11,5 @@ endif::[]
 include::customerController.adoc[]
 
 include::productController.adoc[]
+
+include::orderController.adoc[]

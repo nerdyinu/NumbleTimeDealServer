@@ -3,6 +3,7 @@ package com.example.numbletimedealserver.restdocs
 import com.example.numbletimedealserver.DATETIME
 import com.example.numbletimedealserver.RestDocsConfig
 import com.example.numbletimedealserver.STRING
+import com.example.numbletimedealserver.TYPE
 import com.example.numbletimedealserver.domain.Customer
 import com.example.numbletimedealserver.domain.Order
 import com.example.numbletimedealserver.domain.Product
@@ -102,9 +103,9 @@ class OrderControllerDocs @Autowired constructor(
                         RequestDocumentation.parameterWithName("productId").description("상품 id")
                     ),
                     responseFields(
-                        fieldWithPath("id").optional().type(STRING).description("주문 id"),
-                        fieldWithPath("customerId").optional().type(STRING).description("주문 고객 id"),
-                        fieldWithPath("productId").optional().type(DATETIME)
+                        fieldWithPath("id").optional().TYPE(STRING).description("주문 id"),
+                        fieldWithPath("customerId").optional().TYPE(STRING).description("주문 고객 id"),
+                        fieldWithPath("productId").optional().TYPE(DATETIME)
                             .description("주문 상품 id"),
 
                     ),

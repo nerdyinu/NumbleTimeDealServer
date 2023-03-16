@@ -1,0 +1,16 @@
+
+
+== 상품등록 [POST] /register
+operation::product-controller-docs/상품등록[snippets="curl-request,http-request,request-body,request-fields,response-body,response-fields,http-response"]
+
+== 상품목록/어드민 [GET] /products/admin
+operation::product-controller-docs/상품목록/어드민[snippets="curl-request,http-request,query-parameters,request-body,response-body,response-fields,http-response"]
+
+== 상품목록/일반 [GET] /products/user
+operation::product-controller-docs/상품목록/일반[snippets="curl-request,http-request,query-parameters,request-body,response-body,response-fields,http-response"]
+
+== 상품상세 [GET] /products/{productId}
+operation::product-controller-docs/상품상세[snippets="curl-request,http-request,path-parameters,request-body,response-body,response-fields,http-response"]
+
+== 상품수정 [PUT] /products/{productId}
+operation::product-controller-docs/상품수정[snippets="curl-request,http-request,path-parameters,request-body,request-fields,response-body,response-fields,http-response"]

@@ -1,0 +1,2 @@
+== 주문등록 [POST] /order/{productId}
+operation::order-controller-docs/주문 등록[snippets="curl-request,http-request,path-parameters,response-body,response-fields,http-response"]

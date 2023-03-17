@@ -1,8 +1,8 @@
 pipeline {
   agent any
   environment {
-      MY_IP = 'http://121.136.121.121'
-      NGRINDER_CONTROLLER_URL = 'http://121.136.121.121:8080'
+      MY_IP = 'http://172.30.1.41'
+      NGRINDER_CONTROLLER_URL = 'http://172.30.1.41:8080'
       GIT_SSH_COMMAND = 'ssh -i /var/jenkins_home/.ssh/id_rsa -o StrictHostKeyChecking=no'
   }
 

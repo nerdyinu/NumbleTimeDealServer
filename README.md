@@ -31,6 +31,7 @@
 
 ### API 명세
 API 명세는 RestDocs를 사용하여 생성하였습니다.
+https://inudev5.github.io/NumbleBankingServerChallenge/
 
 ### 시스템 아키텍쳐
 

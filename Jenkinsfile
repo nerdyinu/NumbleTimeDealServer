@@ -51,21 +51,13 @@ pipeline {
         }
       }
     }
-      stage("authenticate"){
-        steps{
-            script{
-                sh """
-                curl --user admin:admin ${NGRINDER_CONTROLLER_URL}/perftest/api
-                """
-            }
-        }
-    }
+
 
       stage('Get Test List') {
           steps {
               script {
                   def response = sh(returnStdout: true, script: '''
-                  curl -X GET -H "Content-Type: application/json" \
+                  curl --user admin:admin -X GET -H "Content-Type: application/json" \
                   "${NGRINDER_CONTROLLER_URL}/perftest/api?page=0"
                   ''').trim()
                   def jsonResponse = readJSON text: response
@@ -82,7 +74,7 @@ pipeline {
                   testIDs.each { testID ->
                       // Start the nGrinder test using REST API
                       sh '''
-                      curl -X PUT -H "Content-Type: application/json" \
+                      curl --user admin:admin -X PUT -H "Content-Type: application/json" \
                       "${NGRINDER_CONTROLLER_URL}/perftest/api/${testID}/start"
                       '''
 
@@ -91,7 +83,7 @@ pipeline {
                       def testFinished = false
                       while (!testFinished) {
                           def response = sh(returnStdout: true, script: '''
-                          curl -X GET -H "Content-Type: application/json" \
+                          curl --user admin:admin -X GET -H "Content-Type: application/json" \
                           "${NGRINDER_CONTROLLER_URL}/perftest/api/${testID}"
                           ''').trim()
 

@@ -44,7 +44,11 @@ spring:
 
 The server will be running on http://localhost:8080.
 
-API Endpoints
+### API Endpoints
+
+API docs created with Spring RESTDOCS:
+https://inudev5.github.io/NumbleBankingServerChallenge/
+
 /api/v1/register: User registration
 /api/v1/login: User login
 /api/v1/products: List all products (role-based access)
@@ -52,8 +56,10 @@ API Endpoints
 /api/v1/products/{id}/update: Update product details
 /api/v1/orders: Create and list orders
 
-API docs created with Spring RESTDOCS:
-https://inudev5.github.io/NumbleBankingServerChallenge/
+
+### Wiki, 회고록
+
+https://github.com/inudev5/NumbleTimeDealServer/wiki/%ED%83%80%EC%9E%84%EB%94%9C-%EC%84%9C%EB%B2%84-%EC%B1%8C%EB%A6%B0%EC%A7%80
 
 
 License
@@ -62,7 +68,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 You can customize this README.md to better fit your project's requirements or add any additional information that you think is necessary.
 
-### WIKI
-
-https://github.com/inudev5/NumbleTimeDealServer/wiki/%ED%83%80%EC%9E%84%EB%94%9C-%EC%84%9C%EB%B2%84-%EC%B1%8C%EB%A6%B0%EC%A7%80
 
